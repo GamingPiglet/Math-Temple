@@ -1,4 +1,4 @@
-import random, time, math
+import random, math
 
 from replit import db
 from getkey import getkey, keys
@@ -7,7 +7,7 @@ run = True # keep game running
 
 vwall = ["c", "v", "v", "v", "v", "v", "v", "c"] # vertical wall
 
-room1 = [vwall, ["h", "s", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], vwall] # sample room
+room1 = [vwall, ["h", "s", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], vwall, {tuple([5, 0]): 1}] # sample room, final dict for door storage
 
 map = [["+", "-", " ", "-", " " "-", "+"], ["|", "3", " ", "2", " ", "4", "|"], ["+", "-", "+", " ", "+", "-", "+"], [" ", " ", "|", "1", "|", " ", " "], [" ", " ", "|", "0", "|", " ", " "], [" ", " ", " ", "-", " ", " ", " "]]
 
@@ -57,11 +57,11 @@ itemNameCaps1 = {
   "dusty textbook": "Dusty Textbook"
 }
 
-enemies1 = {
+enemies = {
   "bogey": {
     "health": 7,
     "atk": 3, # as an actual constant
-    "def": 0,
+    "def": 3,
     "crit": 1,
     "miss": 20,
     "xpYield": 5, # as an actual constant
@@ -72,7 +72,7 @@ enemies1 = {
   "rotten apple": {
     "health": 5,
     "atk": 7,
-    "def": 0,
+    "def": 2,
     "crit": 1,
     "miss": 20,
     "xpYield": 6,
@@ -82,23 +82,44 @@ enemies1 = {
   },
   "dark cloud": {
     "health": 8,
-    "atk": 3,
-    "def": 0,
+    "atk": 5,
+    "def": 4,
     "crit": 1,
     "miss": 20,
     "xpYield": 4,
     "moneyYield": 4,
     "initialText": "Some math student decided to concentrate all his stress into some black miasma to calm down. Now it's your problem to deal with.",
     "encounterTexts": ["The cloud floats around.\n", "The cloud splits itself, then reforms.\n", "The cloud sits there, menacingly.\n"]
+  },
+  "addition ninja": {
+    "health": 14,
+    "atk": 11,
+    "def": 3,
+    "crit": 2,
+    "miss": 10,
+    "xpYield": 8,
+    "moneyYield": 10,
+    "initialText": "This is a math student that watched too much Naruto. Now he's mad and wants to fill you with his plus-shaped shurikens.",
+    "encounterTexts": ["The ninja tries to clone himself, then remembers all he can add is cuts to your body.\n", "The ninja does some parkour. You aren't impressed.\n", "The ninja spins his shurikens, then cuts himself.\n"]
   }
 }
 
-enemyNames1 = ["bogey", "rotten apple", "dark cloud"] # creativity juice needed
+# when adding bosses, make sure you put the boss name last for easy grabbing
+enemyNames1 = ["bogey", "rotten apple", "dark cloud", "addition ninja"] # creativity juice needed
+
+enemyNames2 = []
+
+enemyNames3 = []
+
+enemyNames4 = []
+
+enemyPools = [enemyNames1, enemyNames2, enemyNames3, enemyNames4]
 
 enemyNameCaps1 = {
   "bogey": "Bogey",
   "rotten apple": "Rotten Apple",
-  "dark cloud": "Dark Cloud"
+  "dark cloud": "Dark Cloud",
+  "addition ninja": "Addition Ninja"
 }
 
 tileSymbol = {
@@ -131,9 +152,9 @@ playerStats = { # dict to store player stats
   ]
 }
 
-xpLevelToProg = {
-  1: 15
-}
+xpLevelToProg = [
+  15
+]
 
 floorMath = [
   {
@@ -171,7 +192,7 @@ floorMath = [
 
 def printRoom(room):
   for y in range(len(room[0])): # column
-    for x in range(len(room)): # row
+    for x in range(len(room) - 1): # row
       tile = room[x][y]
       
       if x == playerStats["x"] and y == playerStats["y"]:
@@ -180,8 +201,7 @@ def printRoom(room):
         print(tile + " ", end = "")
       else:
         print(tileSymbol[tile] + " ", end = "")
-      if x == len(room) - 1:
-        print() # print \n after each row
+    print() # print \n after each row
   print() # print line break after printing room
 
 printRoom(room1) # starting room print
@@ -205,7 +225,15 @@ dirToCoord = {
   "righty": 0,
 }
 
+dirToRoom = {
+  "up": [5, 6],
+  "down": [5, 0],
+  "left": [8, 4],
+  "right": [8, 0]
+}
+
 def move(direction):
+  global playerRoom
   posChar = playerRoom[playerStats["x"] + dirToCoord[direction + "x"]][playerStats["y"] + dirToCoord[direction + "y"]] # temp variable for the position of the character
   if posChar in {"v", "h"}: # if its a wall block them
     printRoom(playerRoom)
@@ -216,6 +244,25 @@ def move(direction):
     playerStats["x"] += dirToCoord[direction + "x"]
     playerStats["y"] += dirToCoord[direction + "y"]
     encounter = random.randint(1, 100)
+    if playerRoom[playerStats["x"]][playerStats["y"]] == "d":
+      if playerStats["room"] + playerRoom[-1][tuple([playerStats["x"], playerStats["y"]])] == 4:
+        print("You feel uneasy, do you want to proceed? (Boss room ahead, press enter to move forward)")
+        e = getkey()
+        if e == keys.ENTER:
+          combat1(boss=True)
+          if playerRoom[playerStats["x"]][playerStats["y"]] != "d":
+            return
+        else:
+          print("Going back...")
+          playerStats["x"] -= dirToCoord[direction + "x"]
+          playerStats["y"] -= dirToCoord[direction + "y"]
+          printRoom(playerRoom)
+          return
+      playerStats["room"] += playerRoom[-1][tuple([playerStats["x"], playerStats["y"]])]
+      playerStats["x"] = dirToRoom[direction][0]
+      playerStats["y"] = dirToRoom[direction][1]
+      playerRoom = master[playerStats["floor"]][playerStats["room"]]
+      printRoom(playerRoom)
     if 1 <= encounter <= 15:
       playerStats["currentChar"] = "!"
       printRoom(playerRoom)
@@ -227,13 +274,18 @@ def move(direction):
 
 runSuccess = False
 
-def combat1():
+def combat1(boss=False):
   global combatPI1
   global enemy1
   global currentEnemyHealth1
   combatPI1 = 0
-  enemyName1 = random.choice(enemyNames1)
-  enemy1 = enemies1[enemyName1]
+  if boss:
+    enemyName1 = enemyPools[playerStats["floor"]][-1]
+  else:
+    enemyName1 = random.choice(enemyPools[playerStats["floor"]])
+    while enemyName1 == enemyPools[playerStats["floor"]][-1]:
+      enemyName1 = random.choice(enemyPools[playerStats["floor"]])
+  enemy1 = enemies[enemyName1]
   currentEnemyHealth1 = enemy1["health"]
   print(enemy1["initialText"]) # encounter text
   def combatPointer1Refresh():
@@ -272,7 +324,13 @@ def combat1():
     moneyGain1 = random.randint(enemy1["moneyYield"] - 1, enemy1["moneyYield"] + 1)
     playerStats["xpProg"] += xpGain1
     playerStats["money"] += moneyGain1
-    print(f"You gained {xpGain1} XP and ${moneyGain1}! (Level {playerStats['xp']}; {playerStats['xpProg']}/{xpLevelToProg[playerStats['xp']]} to next level)\n")
+    print(f"You gained {xpGain1} XP and ${moneyGain1}! (Level {playerStats['xp']}; {playerStats['xpProg']}/{xpLevelToProg[playerStats['xp'] - 1]} to next level)\n")
+    if playerStats["xpProg"] >= xpLevelToProg[playerStats["xp"] - 1]:
+      print("You levelled up!")
+      playerStats["xpProg"] %= xpLevelToProg[playerStats["xp"]]
+      playerStats["xp"] += 1
+      # put stat increasing here
+      
 
   global runSuccess
   while True:
@@ -290,6 +348,10 @@ def combat1():
       if combatPI1 == 0:
         atk1(enemy1)
         enemyAtk1()
+        if playerStats["health"] <= 0:
+          print("You died! Loading last save...")
+          load()
+          return
         print(random.choice(enemy1["encounterTexts"]))
         combatPointer1Refresh()# its good now !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       elif combatPI1 == 1:
@@ -339,7 +401,7 @@ def run(floor):
   global runSuccess
   mathProblem = random.choice(list(floorMath[floor].keys()))
   mathSolution = floorMath[floor][mathProblem]
-  print(f"In order to run you must solve the following problem Lol: {mathProblem}")
+  print(f"In order to run you must solve the following problem: {mathProblem}")
   mathSolInput = input("Enter: ")
   if mathSolInput == mathSolution:
     runSuccess = True
