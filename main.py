@@ -43,8 +43,8 @@ items1 = { # floor 1 items along with their flavour texts
   "crumb": "A strange looking crumb. You're not sure where this came from. Heals 10 HP.",
   "crumbc": 3,
   "crumbs": "health",
-  "dusty textbook": "You aren't sure why, but you feel compelled to read it out loud. Decreases damage by 5 for 3 turns.",
-  "dusty textbookc": 6,
+  "dusty textbook": "You aren't sure why, but you feel compelled to read it out loud. Decreases damage by 5 for 3 attacks.",
+  "dusty textbookc": 5,
   "dusty textbooks": "def",
   "dusty textbookt": 3
 }
@@ -306,6 +306,11 @@ def combat1(boss=False):
   
   def atk1(enemy):
     global currentEnemyHealth1
+    for i in playerStats["buffs"]["atk"].keys():
+      playerStats["buffs"]["atk"][i]["duration"] -= 1
+      if playerStats["buffs"]["atk"][i]["duration"] == 0:
+        playerStats[i] -= playerStats["buffs"][i][e]["change"]
+        print(f"You lost a buff: -{playerStats['buffs'][i][e]['change']} {i}.")
     a = math.floor(3**(1 + 0.1*playerStats["xp"]))
     b = math.ceil(5**(1 + 0.1*playerStats["xp"]))
     playerAtkInt1 = random.randint(a, b) + playerStats["atk"]
@@ -314,6 +319,11 @@ def combat1(boss=False):
 
   def enemyAtk1():
     global enemy1
+    for i in playerStats["buffs"]["def"].keys():
+      playerStats["buffs"]["def"][i]["duration"] -= 1
+      if playerStats["buffs"]["def"][i]["duration"] == 0:
+        playerStats[i] -= playerStats["buffs"][i][e]["change"]
+        print(f"You lost a buff: -{playerStats['buffs'][i][e]['change']} {i}.")
     chance = random.randint(1, 100)
     if chance <= enemy1["miss"]:
       print(f"{enemyNameCaps1[enemyName1]} missed!")
@@ -353,12 +363,6 @@ def combat1(boss=False):
       combatPI1 = (combatPI1 + 1) % 3
       combatPointer1Refresh()
     elif e == keys.ENTER:
-      for i in playerStats["buffs"].keys():
-        for e in playerStats["buffs"][i].keys():
-          playerStats["buffs"][i][e]["duration"] -= 1
-          if playerStats["buffs"][i][e]["duration"] == 0:
-            playerStats[i] -= playerStats["buffs"][i][e]["change"]
-            print(f"You lost a buff: -{playerStats['buffs'][i][e]['change']} {i}.")
       if combatPI1 == 0:
         atk1(enemy1)
         enemyAtk1()
@@ -370,7 +374,6 @@ def combat1(boss=False):
         combatPointer1Refresh()# its good now !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       elif combatPI1 == 1:
         inv()
-        enemyAtk1()
         combatPointer1Refresh()
       elif combatPI1 == 2:
         run(playerStats["floor"])
