@@ -32,19 +32,21 @@ playerInv = []
 items1 = { # floor 1 items along with their flavour texts
   "bread": "A rather stale loaf of bread. Heals 15 HP.",
   "breadc": 5,
-  "breads": "def",
+  "breads": "health",
   "chocolate stick": "Not a bar, but a stick of chocolate. Like the ones you break apart into two. Heals 23 HP.",
   "chocolate stickc": 7,
   "chocolate sticks": "health",
   "extra sharp stick": "An extra sharp stick. Nice! Deals 5 more damage on your next attack when used.",
-  "extra sharp stickc": 8,
+  "extra sharp stickc": 5,
   "extra sharp sticks": "atk",
+  "extra sharp stickt": 1,
   "crumb": "A strange looking crumb. You're not sure where this came from. Heals 10 HP.",
   "crumbc": 3,
   "crumbs": "health",
-  "dusty textbook": "You aren't sure why, but you feel compelled to read it out loud. Increases defense by 5 for 3 turns.",
+  "dusty textbook": "You aren't sure why, but you feel compelled to read it out loud. Decreases damage by 5 for 3 turns.",
   "dusty textbookc": 6,
   "dusty textbooks": "def",
+  "dusty textbookt": 3
 }
 
 itemNames1 = ["bread", "chocolate stick", "extra sharp stick", "crumb", "dusty textbook"]
@@ -138,12 +140,18 @@ playerStats = { # dict to store player stats
   "room": 0,
   "x": 4,
   "y": 6,
+  "atk": 0, # unlike enemies, player atk and def are flat damage increases and decreases respectively
+  "def": 0,
   "health": 100,
   "money": 0,
   "xp": 1, # as a level
   "xpProg": 0, # out of number determined by xp level
   "crit": 0.05, # chance as a %
   "miss": 0.05, # chance as a %
+  "buffs": {
+    "atk": {},
+    "def": {}
+  },
   "mapStates": [
     [False, False, False, False, False],
     [False, False, False, False, False],
@@ -300,7 +308,7 @@ def combat1(boss=False):
     global currentEnemyHealth1
     a = math.floor(3**(1 + 0.1*playerStats["xp"]))
     b = math.ceil(5**(1 + 0.1*playerStats["xp"]))
-    playerAtkInt1 = random.randint(a, b)
+    playerAtkInt1 = random.randint(a, b) + playerStats["atk"]
     currentEnemyHealth1 -= playerAtkInt1
     print(f"You dealt {playerAtkInt1} damage to the {enemyNameCaps1[enemyName1]}!\n")
 
@@ -310,7 +318,7 @@ def combat1(boss=False):
     if chance <= enemy1["miss"]:
       print(f"{enemyNameCaps1[enemyName1]} missed!")
     elif chance >= enemy1["crit"]:
-      enemyAtkInt1 = math.floor(1.5*random.randint(enemy1["atk"] - 1, enemy1["atk"] + 1))
+      enemyAtkInt1 = max(math.floor(1.5*random.randint(enemy1["atk"] - 1, enemy1["atk"] + 1)) - playerStats["def"], 0)
       playerStats["health"] -= enemyAtkInt1
       print(f"Critical! {enemyNameCaps1[enemyName1]} deals {enemyAtkInt1} damage.")
     else:
@@ -334,10 +342,10 @@ def combat1(boss=False):
 
   global runSuccess
   while True:
-    e = getkey()
     if currentEnemyHealth1 <= 0:
       enemyDeath1()
       return
+    e = getkey()
     if e == keys.LEFT:
       combatPI1 = (combatPI1 - 1) % 3
       combatPointer1Refresh()
@@ -345,6 +353,12 @@ def combat1(boss=False):
       combatPI1 = (combatPI1 + 1) % 3
       combatPointer1Refresh()
     elif e == keys.ENTER:
+      for i in playerStats["buffs"].keys():
+        for e in playerStats["buffs"][i].keys():
+          playerStats["buffs"][i][e]["duration"] -= 1
+          if playerStats["buffs"][i][e]["duration"] == 0:
+            playerStats[i] -= playerStats["buffs"][i][e]["change"]
+            print(f"You lost a buff: -{playerStats['buffs'][i][e]['change']} {i}.")
       if combatPI1 == 0:
         atk1(enemy1)
         enemyAtk1()
@@ -356,6 +370,8 @@ def combat1(boss=False):
         combatPointer1Refresh()# its good now !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       elif combatPI1 == 1:
         inv()
+        enemyAtk1()
+        combatPointer1Refresh()
       elif combatPI1 == 2:
         run(playerStats["floor"])
         if runSuccess == True:
@@ -393,7 +409,22 @@ def inv():
     elif e == keys.DOWN:
       (invPI + 1) % 3
     elif e == keys.ENTER:
-      print("use item function here")
+      currentItem = playerInv[invPI]
+      print()
+      print(items1[currentItem] + "\n")
+      print("Would you like to use this item? Press enter again to confirm.")
+      confirm = getkey()
+      if confirm == keys.ENTER:
+        if (items1[currentItem + "s"] == "health"):
+          playerStats["health"] += items1[currentItem + "c"]
+          print(f"{items1[currentItem + 'c']} hp was restored.")
+        else:
+          playerStats["buffs"][items1[currentItem + "s"]][currentItem] = {"change": items1[currentItem + "c"], "duration": items1[currentItem + "t"]}
+          playerStats[items1[currentItem + "s"]] += items1[currentItem + "c"]
+          print(f"New buff: +{items1[currentItem + 'c']} {items1[currentItem + 's']} for {items1[currentItem + 't']} turns.\n")
+        return
+      else:
+        invRefresh()
     elif e == keys.ESCAPE:
       return
 
@@ -475,12 +506,14 @@ def shop1():
       
       
 def save():
-  db["save"] = playerStats # put current player info in db
-  db["inv"] = playerInv
+  db["save"] = playerStats.copy() # put current player info in db
+  db["inv"] = playerInv.copy()
 
 def load():
-  playerStats = db["save"] # take saved player info from db
-  playerInv = db["inv"]
+  global playerStats
+  global playerInv
+  playerStats = db["save"].copy() # take saved player info from db
+  playerInv = db["inv"].copy()
 
 def printMap():
   for x in range(len(map)):
