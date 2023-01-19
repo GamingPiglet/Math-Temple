@@ -54,7 +54,7 @@ items1 = { # floor 1 items along with their flavour texts
 
 itemNames1 = ["bread", "chocolate stick", "extra sharp stick", "crumb", "dusty textbook"]
 
-itemNames2 = []
+itemNames2 = [""]
 
 itemNames3 = []
 
@@ -118,6 +118,7 @@ enemies = {
     "initialText": "This is a math student that watched too much Naruto. Now he's mad and wants to fill you with his plus-shaped shurikens.\n",
     "encounterTexts": ["The ninja tries to clone himself, then remembers all he can add is cuts to your body.\n", "The ninja does some parkour. You aren't impressed.\n", "The ninja spins his shurikens, then cuts himself.\n"]
   }
+  
 }
 
 # when adding bosses, make sure you put the boss name last for easy grabbing
@@ -145,7 +146,9 @@ tileSymbol = {
   "e": " ",
   "p": "@", 
   "d": "*",
-  "s": "$"
+  "s": "$",
+  "U": "s",
+  "D": "s"
 }
 
 playerStats = { # dict to store player stats
@@ -226,9 +229,10 @@ def printRoom(room):
     print() # print \n after each row
   print() # print line break after printing room
 
-printRoom(room1) # starting room print
+playerRoom = master[playerStats["floor"]][playerStats["room"]]
 
-playerRoom = master[playerStats["floor"]][playerStats["room"]] # indexes player's floor and room and prints it - prob put this somewhere suitable
+printRoom(playerRoom) # starting room print
+# indexes player's floor and room and prints it - prob put this somewhere suitable
 
 # was gonna do a dictionary to read direction and output smth hmm oh yea oh true WAIT i ahve a genius idea sorta wait hmm uhh hmm OH oh OH Oh 
 
@@ -290,7 +294,22 @@ def move(direction):
       playerStats["y"] = dirToRoom[direction][1]
       playerRoom = master[playerStats["floor"]][playerStats["room"]]
       playerStats["mapStates"][playerStats["room"]] = True
-      printRoom(playerRoom)
+    elif playerRoom[playerStats["x"]][playerStats["y"]] == "U":
+      playerStats["floor"] += 1
+      playerStats["room"] = 0
+      playerRoom = master[playerStats["floor"]][playerStats["room"]]
+      print("Autosaving...")
+      save()
+      print("Done!")
+    elif playerRoom[playerStats["x"]][playerStats["y"]] == "D":
+      playerStats["floor"] -= 1
+      playerStats["room"] = 0
+      playerRoom = master[playerStats["floor"]][playerStats["room"]]
+      print("Autosaving...")
+      save()
+      print("Done!")
+    if playerStats["health"] < 100:
+      playerStats["health"] = min(100, playerStats["health"] + 2)
     if 1 <= encounter <= 15:
       playerStats["currentChar"] = "!"
       printRoom(playerRoom)
@@ -573,6 +592,9 @@ def printMap():
           print(map[x][y], end="")
     print()
 
+def stats():
+  print("wip")
+
 if "save" in db.keys():
   load()
 
@@ -589,6 +611,10 @@ while run: # game loop
     move("right")
   elif e == "m":
     printMap()
+  elif e == "i":
+    inv()
+  elif e == "s":
+    stats()
   elif e == keys.ESCAPE:
     print("Would you like to quit Math Temple? Press esc again to quit.")
     quitConfirm = getkey()
@@ -597,7 +623,6 @@ while run: # game loop
       run = False
     else:
       print("Back to Math Temple!")
-
 """
 Sources:
 https://replit.com/talk/learn/GetKeys-tutorial-Python/128030
