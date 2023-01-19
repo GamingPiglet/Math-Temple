@@ -47,9 +47,12 @@ items1 = { # floor 1 items along with their flavour texts
   "dusty textbookc": 5,
   "dusty textbooks": "def",
   "dusty textbookt": 3,
-  "study note 1": "Dropped by the addition ninja. Seems he was in grade 9.",
+  "study note 1": "Dropped by the addition ninja. Seems to be grade 9 material.",
   "study note 1c": "put note here",
-  "study note 1s": "unusable"
+  "study note 1s": "unusable",
+  "study note 2": "Dropped by the s,ubtraction paladin. Seems to be grade 10 material.",
+  "study note 2c": "put note here",
+  "study note 2s": "unusable"
 }
 
 itemNames1 = ["bread", "chocolate stick", "extra sharp stick", "crumb", "dusty textbook"]
@@ -121,20 +124,31 @@ enemies = {
   "angry student": {
     "health" : 12,
     "atk": 9,
-    "def": 4,
+    "def": 6,
     "crit": 1,
     "miss": 20,
     "xpYield": 7,
     "moneyYield": 9,
     "initialText": "This student cracked under pressure and is now killing anything that moves. Which means you.\n",
     "encounterTexts": ["The student punches a wall.\n", "The student starts screaming.\n", "The student tries deep breathing, but it does nothing.\n"]
+  },
+  "subtraction paladin": {
+    "health": 18,
+    "atk": 14,
+    "def": 9,
+    "crit": 3,
+    "miss": 20,
+    "xpYield": 11,
+    "moneyYield": 9,
+    "initialText": "A theater student that also happens to be into math got a little too into his role as a paladin. Now he has a god complex and fights anyone he sees.",
+    "encounterTexts": ["The paladin hoists his axe onto his shoulder, and bounces it on his shoulder.\n", "The paladin lets out a hearty warcry.\n", "The paladin adjusts his helmet.\n"]
   }
 }
 
 # when adding bosses, make sure you put the boss name last for easy grabbing
 enemyNames1 = ["bogey", "rotten apple", "dark cloud", "addition ninja"] # creativity juice needed
 
-enemyNames2 = ["angry student"]
+enemyNames2 = ["angry student", "subtraction paladin"]
 
 enemyNames3 = []
 
@@ -147,7 +161,8 @@ enemyNameCaps1 = {
   "rotten apple": "Rotten Apple",
   "dark cloud": "Dark Cloud",
   "addition ninja": "Addition Ninja",
-  "angry student": "Angry Student"
+  "angry student": "Angry Student",
+  "subtraction paladin": "Subtraction Paladin"
 }
 
 tileSymbol = {
