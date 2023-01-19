@@ -46,17 +46,31 @@ items1 = { # floor 1 items along with their flavour texts
   "dusty textbook": "You aren't sure why, but you feel compelled to read it out loud. Decreases damage by 5 for 3 attacks.",
   "dusty textbookc": 5,
   "dusty textbooks": "def",
-  "dusty textbookt": 3
+  "dusty textbookt": 3,
+  "study note 1": "Dropped by the addition ninja. Seems he was in grade 9.",
+  "study note 1c": "put note here",
+  "study note 1s": "unusable"
 }
 
 itemNames1 = ["bread", "chocolate stick", "extra sharp stick", "crumb", "dusty textbook"]
+
+itemNames2 = []
+
+itemNames3 = []
+
+itemNames4 = []
+
+studyNotes = ["study note 1", "study note 2", "study note 3", "study note 4"]
+
+itemPools = [itemNames1, itemNames2, itemNames3, itemNames4]
 
 itemNameCaps1 = {
   "bread": "Bread",
   "chocolate stick": "Chocolate Stick",
   "extra sharp stick": "Extra Sharp Stick",
   "crumb": "Crumb",
-  "dusty textbook": "Dusty Textbook"
+  "dusty textbook": "Dusty Textbook",
+  "study note 1": "Study Note 1"
 }
 
 enemies = {
@@ -79,7 +93,7 @@ enemies = {
     "miss": 20,
     "xpYield": 6,
     "moneyYield": 5,
-    "initialText": "As you walk, you find an apple at your feet. It then decided to grow to about your size and start biting you.",
+    "initialText": "As you walk, you find an apple at your feet. It then decided to grow to about your size and start biting you.\n",
     "encounterTexts": ["The apple rolls around.\n", "The apple rests against a wall.\n", "The apple spits out a little of its insides, and then eats it. \n"]
   },
   "dark cloud": {
@@ -90,7 +104,7 @@ enemies = {
     "miss": 20,
     "xpYield": 4,
     "moneyYield": 4,
-    "initialText": "Some math student decided to concentrate all his stress into some black miasma to calm down. Now it's your problem to deal with.",
+    "initialText": "Some math student decided to concentrate all his stress into some black miasma to calm down. Now it's your problem to deal with.\n",
     "encounterTexts": ["The cloud floats around.\n", "The cloud splits itself, then reforms.\n", "The cloud sits there, menacingly.\n"]
   },
   "addition ninja": {
@@ -101,7 +115,7 @@ enemies = {
     "miss": 10,
     "xpYield": 8,
     "moneyYield": 10,
-    "initialText": "This is a math student that watched too much Naruto. Now he's mad and wants to fill you with his plus-shaped shurikens.",
+    "initialText": "This is a math student that watched too much Naruto. Now he's mad and wants to fill you with his plus-shaped shurikens.\n",
     "encounterTexts": ["The ninja tries to clone himself, then remembers all he can add is cuts to your body.\n", "The ninja does some parkour. You aren't impressed.\n", "The ninja spins his shurikens, then cuts himself.\n"]
   }
 }
@@ -153,10 +167,10 @@ playerStats = { # dict to store player stats
     "def": {}
   },
   "mapStates": [
-    [False, False, False, False, False],
-    [False, False, False, False, False],
-    [False, False, False, False, False],
-    [False, False, False, False, False]
+    [True, False, False, False, False],
+    [True, False, False, False, False],
+    [True, False, False, False, False],
+    [True, False, False, False, False]
   ]
 }
 
@@ -240,6 +254,11 @@ dirToRoom = {
   "right": [8, 0]
 }
 
+statToName = {
+  "atk": "damage increase",
+  "def": "damage reduction"
+}
+
 def move(direction):
   global playerRoom
   posChar = playerRoom[playerStats["x"] + dirToCoord[direction + "x"]][playerStats["y"] + dirToCoord[direction + "y"]] # temp variable for the position of the character
@@ -253,7 +272,7 @@ def move(direction):
     playerStats["y"] += dirToCoord[direction + "y"]
     encounter = random.randint(1, 100)
     if playerRoom[playerStats["x"]][playerStats["y"]] == "d":
-      if playerStats["room"] + playerRoom[-1][tuple([playerStats["x"], playerStats["y"]])] == 4:
+      if playerStats["mapStates"][playerStats["floor"]][4] or playerStats["room"] + playerRoom[-1][tuple([playerStats["x"], playerStats["y"]])] == 4: # first check is simply to see if player visited boss room. if they did, don't fight boss
         print("You feel uneasy, do you want to proceed? (Boss room ahead, press enter to move forward)")
         e = getkey()
         if e == keys.ENTER:
@@ -270,6 +289,7 @@ def move(direction):
       playerStats["x"] = dirToRoom[direction][0]
       playerStats["y"] = dirToRoom[direction][1]
       playerRoom = master[playerStats["floor"]][playerStats["room"]]
+      playerStats["mapStates"][playerStats["room"]] = True
       printRoom(playerRoom)
     if 1 <= encounter <= 15:
       playerStats["currentChar"] = "!"
@@ -290,7 +310,7 @@ def combat1(boss=False):
   if boss:
     enemyName1 = enemyPools[playerStats["floor"]][-1]
   else:
-    enemyName1 = random.choice(enemyPools[playerStats["floor"]])
+    enemyName1 = random.choice(enemyPools[playerStats["floor"]][:3])
     while enemyName1 == enemyPools[playerStats["floor"]][-1]:
       enemyName1 = random.choice(enemyPools[playerStats["floor"]])
   enemy1 = enemies[enemyName1]
@@ -306,11 +326,14 @@ def combat1(boss=False):
   
   def atk1(enemy):
     global currentEnemyHealth1
+    removeQueue = []
     for i in playerStats["buffs"]["atk"].keys():
       playerStats["buffs"]["atk"][i]["duration"] -= 1
       if playerStats["buffs"]["atk"][i]["duration"] == 0:
-        playerStats[i] -= playerStats["buffs"][i][e]["change"]
-        print(f"You lost a buff: -{playerStats['buffs'][i][e]['change']} {i}.")
+        playerStats[i] -= playerStats["buffs"]["atk"][i]["change"]
+        print(f"You lost a buff: -{playerStats['buffs']['atk'][i]['change']} damage increase.")
+    for i in removeQueue:
+      del playerStats["buffs"]["atk"][i]
     a = math.floor(3**(1 + 0.1*playerStats["xp"]))
     b = math.ceil(5**(1 + 0.1*playerStats["xp"]))
     playerAtkInt1 = random.randint(a, b) + playerStats["atk"]
@@ -319,11 +342,15 @@ def combat1(boss=False):
 
   def enemyAtk1():
     global enemy1
+    removeQueue = []
     for i in playerStats["buffs"]["def"].keys():
       playerStats["buffs"]["def"][i]["duration"] -= 1
       if playerStats["buffs"]["def"][i]["duration"] == 0:
-        playerStats[i] -= playerStats["buffs"][i][e]["change"]
-        print(f"You lost a buff: -{playerStats['buffs'][i][e]['change']} {i}.")
+        playerStats["def"] -= playerStats["buffs"]["def"][i]["change"]
+        print(f"You lost a buff: -{playerStats['buffs']['def'][i]['change']} damage reduction.")
+        removeQueue.add(i)
+    for i in removeQueue:
+      del playerStats["buffs"]["def"][i]
     chance = random.randint(1, 100)
     if chance <= enemy1["miss"]:
       print(f"{enemyNameCaps1[enemyName1]} missed!")
@@ -342,13 +369,20 @@ def combat1(boss=False):
     moneyGain1 = random.randint(enemy1["moneyYield"] - 1, enemy1["moneyYield"] + 1)
     playerStats["xpProg"] += xpGain1
     playerStats["money"] += moneyGain1
-    print(f"You gained {xpGain1} XP and ${moneyGain1}! (Level {playerStats['xp']}; {playerStats['xpProg']}/{xpLevelToProg[playerStats['xp'] - 1]} to next level)\n")
-    if playerStats["xpProg"] >= xpLevelToProg[playerStats["xp"] - 1]:
-      print("You levelled up!")
-      playerStats["xpProg"] %= xpLevelToProg[playerStats["xp"]]
-      playerStats["xp"] += 1
-      # put stat increasing here
-      
+    if len(xpLevelToProg) < playerStats["xp"]:
+      print("You're at max level!")
+    else: 
+      if playerStats["xpProg"] >= xpLevelToProg[playerStats["xp"] - 1]:
+        print("You levelled up!")
+        playerStats["xp"] += 1
+        if len(xpLevelToProg) >= playerStats["xp"]:
+          playerStats["xpProg"] %= xpLevelToProg[playerStats["xp"] - 1]
+      else:  
+        print(f"You gained {xpGain1} XP and ${moneyGain1}! (Level {playerStats['xp']}; {playerStats['xpProg']}/{xpLevelToProg[playerStats['xp'] - 1]} to next level)\n")
+    if enemy1 == enemyPools[playerStats["floor"]][-1]:
+      print(f"{enemy1} dropped a study note! It says:")
+      print(items1[studyNotes[playerStats["floor"]] + "c"])
+      playerInv.append(studyNotes[playerStats["floor"]])
 
   global runSuccess
   while True:
@@ -378,7 +412,7 @@ def combat1(boss=False):
       elif combatPI1 == 2:
         run(playerStats["floor"])
         if runSuccess == True:
-          print(f"You fled from the {enemyNameCaps1[enemyName1]}.")
+          print(f"You fled from the {enemyNameCaps1[enemyName1]}\n.")
           runSuccess = False
           return
         else:
@@ -418,13 +452,17 @@ def inv():
       print("Would you like to use this item? Press enter again to confirm.")
       confirm = getkey()
       if confirm == keys.ENTER:
-        if (items1[currentItem + "s"] == "health"):
+        if items1[currentItem + "s"] == "health":
           playerStats["health"] += items1[currentItem + "c"]
-          print(f"{items1[currentItem + 'c']} hp was restored.")
+          print(f"{items1[currentItem + 'c']} HP was restored. You now have {playerStats['health']} hp.")
+          del playerInv[invPI]
+        elif items1[currentItem + "s"] == "unusable":
+          print(items1[currentItem + "c"] + "\n")
         else:
           playerStats["buffs"][items1[currentItem + "s"]][currentItem] = {"change": items1[currentItem + "c"], "duration": items1[currentItem + "t"]}
           playerStats[items1[currentItem + "s"]] += items1[currentItem + "c"]
-          print(f"New buff: +{items1[currentItem + 'c']} {items1[currentItem + 's']} for {items1[currentItem + 't']} turns.\n")
+          print(f"New buff: +{items1[currentItem + 'c']} {statToName[items1[currentItem + 's']]} for {items1[currentItem + 't']} turns.\n")
+          del playerInv[invPI]
         return
       else:
         invRefresh()
@@ -457,8 +495,9 @@ itemState1 = [0, 0, 0] # so it doesn't get redefined in the shop1() function eve
 def shop1():
   print("Welcome to the shop! Use arrow keys and enter to select your items below. Press esc to exit.\n")
   global shopPointerIndex1
-  global itemList1
-  global itemState1
+  global itemState1  
+  random.shuffle(itemPools[playerStats["floor"]])
+  itemList1 = itemPools[playerStats["floor"]][:3]
   shopPointerIndex1 = 0
   itemChar1 = ["# ", "x "]
   def shopPointer1Refresh():
@@ -558,3 +597,8 @@ while run: # game loop
       run = False
     else:
       print("Back to Math Temple!")
+
+"""
+Sources:
+https://replit.com/talk/learn/GetKeys-tutorial-Python/128030
+"""
