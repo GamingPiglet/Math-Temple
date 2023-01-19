@@ -117,14 +117,24 @@ enemies = {
     "moneyYield": 10,
     "initialText": "This is a math student that watched too much Naruto. Now he's mad and wants to fill you with his plus-shaped shurikens.\n",
     "encounterTexts": ["The ninja tries to clone himself, then remembers all he can add is cuts to your body.\n", "The ninja does some parkour. You aren't impressed.\n", "The ninja spins his shurikens, then cuts himself.\n"]
+  },
+  "angry student": {
+    "health" : 12,
+    "atk": 9,
+    "def": 4,
+    "crit": 1,
+    "miss": 20,
+    "xpYield": 7,
+    "moneyYield": 9,
+    "initialText": "This student cracked under pressure and is now killing anything that moves. Which means you.\n",
+    "encounterTexts": ["The student punches a wall.\n", "The student starts screaming.\n", "The student tries deep breathing, but it does nothing.\n"]
   }
-  
 }
 
 # when adding bosses, make sure you put the boss name last for easy grabbing
 enemyNames1 = ["bogey", "rotten apple", "dark cloud", "addition ninja"] # creativity juice needed
 
-enemyNames2 = []
+enemyNames2 = ["angry student"]
 
 enemyNames3 = []
 
@@ -136,7 +146,8 @@ enemyNameCaps1 = {
   "bogey": "Bogey",
   "rotten apple": "Rotten Apple",
   "dark cloud": "Dark Cloud",
-  "addition ninja": "Addition Ninja"
+  "addition ninja": "Addition Ninja",
+  "angry student": "Angry Student"
 }
 
 tileSymbol = {
@@ -259,7 +270,7 @@ dirToRoom = {
 }
 
 statToName = {
-  "atk": "damage increase",
+  "atk": "extra damage",
   "def": "damage reduction"
 }
 
@@ -341,6 +352,12 @@ def combat1(boss=False):
     combatPointer1 = [" ", " "]
     combatPointer1.insert(combatPI1, "^")
     print(" " + "   ".join(combatPointer1) + "\n")
+    print(f"HP: {playerStats['health']}")
+    if playerStats["atk"] > 0:
+      print(f"Extra damage: {playerStats['atk']}")
+    if playerStats["def"] > 0:
+      print(f"Damage reduction: {playerStats['def']}")
+    print()
   combatPointer1Refresh() # initial menu
   
   def atk1(enemy):
@@ -350,7 +367,7 @@ def combat1(boss=False):
       playerStats["buffs"]["atk"][i]["duration"] -= 1
       if playerStats["buffs"]["atk"][i]["duration"] == 0:
         playerStats[i] -= playerStats["buffs"]["atk"][i]["change"]
-        print(f"You lost a buff: -{playerStats['buffs']['atk'][i]['change']} damage increase.")
+        print(f"You lost a buff: -{playerStats['buffs']['atk'][i]['change']} extra damage.")
     for i in removeQueue:
       del playerStats["buffs"]["atk"][i]
     a = math.floor(3**(1 + 0.1*playerStats["xp"]))
@@ -593,7 +610,16 @@ def printMap():
     print()
 
 def stats():
-  print("wip")
+  print(f"Level: {playerStats['xp']}")
+  if playerStats["xp"] <= len(xpLevelToProg):
+    print(f"XP: {playerStats['xpProg']}/{xpLevelToProg[playerStats['xp'] - 1]}")
+  print(f"HP: {playerStats['health']}")
+  print(f"Money: ${playerStats['money']}")
+  if playerStats["atk"] > 0:
+    print(f"Extra damage: {playerStats['atk']}")
+  if playerStats["def"] > 0:
+    print(f"Damage reduction: {playerStats['def']}")
+  print()
 
 if "save" in db.keys():
   load()
@@ -609,11 +635,11 @@ while run: # game loop
     move("left")
   elif e == keys.RIGHT:
     move("right")
-  elif e == "m":
+  elif e.lower() == "m":
     printMap()
-  elif e == "i":
+  elif e.lower() == "i":
     inv()
-  elif e == "s":
+  elif e.lower() == "s":
     stats()
   elif e == keys.ESCAPE:
     print("Would you like to quit Math Temple? Press esc again to quit.")
