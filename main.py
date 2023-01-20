@@ -31,81 +31,127 @@ playerInv = []
 
 items1 = { # floor 1 items along with their flavour texts
   "bread": "A rather stale loaf of bread. Heals 15 HP.",
-  "breadc": 15,
+  "breadc": 4,
   "breads": "health",
+  "breadb": 15,
   "chocolate stick": "Not a bar, but a stick of chocolate. Like the ones you break apart into two. Heals 23 HP.",
-  "chocolate stickc": 23,
+  "chocolate stickc": 7,
   "chocolate sticks": "health",
-  "extra sharp stick": "An extra sharp stick. Nice! Deals 5 more damage on your next attack when used.",
+  "chocolate stickb": 23,
+  "extra sharp stick": "An extra sharp stick. Nice! Deals 3 more damage on your next attack when used.",
   "extra sharp stickc": 5,
   "extra sharp sticks": "atk",
   "extra sharp stickt": 1,
+  "extra sharp stickb": 3,
   "crumb": "A strange looking crumb. You're not sure where this came from. Heals 10 HP.",
-  "crumbc": 10,
+  "crumbc": 3,
   "crumbs": "health",
-  "dusty textbook": "You aren't sure why, but you feel compelled to read it out loud. Decreases damage by 5 for 3 attacks.",
-  "dusty textbookc": 5,
+  "crumbb": 10,
+  "dusty textbook": "You aren't sure why, but you feel compelled to read it out loud. Decreases damage by 4 for 3 attacks.",
+  "dusty textbookc": 6,
   "dusty textbooks": "def",
   "dusty textbookt": 3,
+  "dusty textbookb": 4,
   "study note 1": "Dropped by the addition ninja. Seems to be grade 9 material.",
-  "apple": "",
   "study note 1c": "put note here",
   "study note 1s": "unusable",
-  "apple core": "A rotten apple core. Smells rancid. Decreases damage by 7 for 1 turn.",
-  "apple corec": 6,
+  "apple core": "A rotten apple core. Smells rancid. Decreases damage by 6 for 1 turn.",
+  "apple corec": 7,
   "apple cores": "def",
   "apple coret": 1,
-  "empty crate": "The apples all around this floor have to be carried somehow. Deals 6 more damage for your next 4 attacks.",
-  "empty cratec": 8,
+  "apple coreb": 6,
+  "empty crate": "The apples all around this floor have to be carried somehow. Deals 6 more damage for 4 attacks.",
+  "empty cratec": 11,
   "empty crates": "atk",
   "empty cratet": 4,
+  "empty crateb": 6,
   "instant boba": "Bubble tea made from powder packets and milk. Not as good as the real thing, but gets the job done. Heals 17 HP.",
-  "instant bobac": 17,
+  "instant bobac": 9,
   "instant bobas": "health",
+  "instant bobab": 17,
   "protein bar": "Doesn't taste great, but it's healthy. Heals 13 HP.",
-  "protein barc": 13,
+  "protein barc": 8,
   "protein bars": "health",
-  "breakfast burger": "Egg inbetween 2 english muffins. Filling enough to start your day. Heals 27 HP.",
-  "breakfast burgerc": 27,
+  "protein barb": 13,
+  "breakfast burger": "Egg between 2 english muffins. Filling enough to start your day. Heals 27 HP.",
+  "breakfast burgerc": 12,
   "breakfast burgers": "health",
+  "breakfast burgerb": 27,
   "study note 2": "Dropped by the subtraction paladin. Seems to be grade 10 material.",
   "study note 2c": "put note here",
-  "study note 2s": "unusable"
+  "study note 2s": "unusable",
+  "bubble tea": "Very popular among students. Heals 20 HP.",
+  "bubble teac": 14,
+  "bubble teas": "health",
+  "bubble teab": 20,
+  "compass": "Not great for slicing, but you're good at stabbing. Deals 8 more damage for 6 attacks.",
+  "compassc": 12,
+  "compasss": "atk",
+  "compasst": 6,
+  "compassb": 8,
+  "notebook": "Flexible enough to redirect attacks. Decreases damage by 9 for 3 turns.",
+  "notebookc": 13,
+  "notebooks": "def",
+  "notebookt": 3,
+  "notebookb": 9,
+  "french fries": "Would be nice with some other food, but you can down them in a few bites. Heals 16 HP.",
+  "french friesc": 10,
+  "french friess": "health",
+  "french friesb": 16,
+  "whole pizza": "As filling as a full-course meal. Heals 27 HP.",
+  "whole pizzac": 17,
+  "whole pizzas": "health",
+  "whole pizzab": 27,
+  "study note 3": "Dropped by the multiplication mage. Seems to be grade 11 material.",
+  "study note 3c": "put note here",
+  "study note 3s": "unusable",
+  "scissors": "Longer blade, deeper cuts. Deals 10 more damage for 6 attacks.",
+  "scissorsc": 20,
+  "scissorss": "atk",
+  "scissorst": 6,
+  "scissorsb": 10,
+  "backpack": "Too small to hold anything, but you can toss it to dampen attacks. Decreases damage by 11 for 3 turns.",
+  "backpackc": 19,
+  "backpacks": "def",
+  "backpackt": 3,
+  "backpackb": 11,
+  "brown sugar boba": "The brown sugar pearls make it taste much better. Heals 24 HP.",
+  "brown sugar bobac": 18,
+  "brown sugar bobas": "health",
+  "brown sugar bobab": 24,
+  "chicken burger combo": "A meaty chicken burger, plus some fries and a drink make a great quick lunch. Heals 30 HP.",
+  "chicken burger comboc": 21,
+  "chicken burger combos": "health",
+  "chicken burger combob": 30,
+  "lunch wrap": "A small but easy to digest meal for tight situations. Heals 20 HP.",
+  "lunch wrapc": 17,
+  "lunch wraps": "health",
+  "lunch wrapb": 20,
+  "study note 4": "Dropped by the division gunner. Seems to be grade 12 material.",
+  "study note 4c": "put note here",
+  "study note 4s": "unusable"
 }
 
 itemNames1 = ["bread", "chocolate stick", "extra sharp stick", "crumb", "dusty textbook"]
 
 itemNames2 = ["apple core", "empty crate", "instant boba", "protein bar", "breakfast burger"]
 
-itemNames3 = []
+itemNames3 = ["bubble tea", "compass", "notebook", "french fries", "whole pizza"]
 
-itemNames4 = []
+itemNames4 = ["scissors", "backpack", "brown sugar boba", "chicken burger combo", "lunch wrap"]
 
 studyNotes = ["study note 1", "study note 2", "study note 3", "study note 4"]
 
 itemPools = [itemNames1, itemNames2, itemNames3, itemNames4]
 
-itemNameCaps1 = {
-  "bread": "Bread",
-  "chocolate stick": "Chocolate Stick",
-  "extra sharp stick": "Extra Sharp Stick",
-  "crumb": "Crumb",
-  "dusty textbook": "Dusty Textbook",
-  "study note 1": "Study Note 1",
-  "apple core": "Apple Core",
-  "empty crate": "Empty Crate",
-  "instant boba": "Instant Boba",
-  "protein bar": "Protein Bar",
-  "breakfast burger": "Breakfast Burger",
-  "study note 2": "Study Note 2"
-}
+shopPools = [[], [], [], []]
 
 enemies = {
   "bogey": {
     "health": 7,
     "atk": 3, # as an actual constant
     "def": 3,
-    "crit": 1,
+    "crit": 5,
     "miss": 20,
     "xpYield": 5, # as an actual constant
     "moneyYield": 3,
@@ -116,7 +162,7 @@ enemies = {
     "health": 5,
     "atk": 7,
     "def": 2,
-    "crit": 1,
+    "crit": 5,
     "miss": 20,
     "xpYield": 6,
     "moneyYield": 5,
@@ -127,7 +173,7 @@ enemies = {
     "health": 8,
     "atk": 5,
     "def": 4,
-    "crit": 1,
+    "crit": 5,
     "miss": 20,
     "xpYield": 4,
     "moneyYield": 4,
@@ -138,7 +184,7 @@ enemies = {
     "health": 14,
     "atk": 11,
     "def": 3,
-    "crit": 2,
+    "crit": 10,
     "miss": 10,
     "xpYield": 8,
     "moneyYield": 10,
@@ -149,7 +195,7 @@ enemies = {
     "health" : 12,
     "atk": 9,
     "def": 6,
-    "crit": 1,
+    "crit": 5,
     "miss": 20,
     "xpYield": 8,
     "moneyYield": 9,
@@ -160,34 +206,121 @@ enemies = {
     "health": 15,
     "atk": 6,
     "def": 9,
-    "crit": 1,
+    "crit": 5,
     "miss": 20,
     "xpYield": 6,
     "moneyYield": 10,
-    "initialText": "Remember those math problems where someone buys a massive number of apples? This is that someone, and he's not moving out of your way.",
+    "initialText": "Remember those math problems where someone buys a massive number of apples? This is that someone, and he's not moving out of your way.\n",
     "encounterTexts": ["The muncher tries to get an apple, but only gets a core.\n", "The muncher places an order for more apples.\n", "The muncher raves on about apples. You tune him out.\n"]
   },
   "quadratic enthusiast": {
     "health": 13,
     "atk": 8,
     "def": 7,
-    "crit": 1,
+    "crit": 5,
     "miss": 20,
     "xpYield": 7,
     "moneyYield": 8,
-    "initialText": "This little prankster likes to throw baseballs at the perfect angle to hit someone in the head. How does he do it? He got a little too into graphing parabolas.",
+    "initialText": "This little prankster likes to throw baseballs at the perfect angle to hit someone in the head. How does he do it? He got a little too into graphing parabolas.\n",
     "encounterTexts": ["The enthusiast throws a ball at a wall, then tries to find the equation of its arc.\n", "The enthusiast throws a ball at a muncher. It lands.\n", "The enthusiast answers an angry call.\n"]
   },
   "subtraction paladin": {
     "health": 18,
     "atk": 14,
     "def": 9,
-    "crit": 3,
+    "crit": 15,
     "miss": 20,
     "xpYield": 11,
     "moneyYield": 9,
-    "initialText": "A theatre student that also happens to be into math got a little too into his role as a paladin. Now he has a god complex and fights anyone he sees.",
+    "initialText": "A theatre student that also happens to be into math got a little too into his role as a paladin. Now he has a god complex and fights anyone he sees.\n",
     "encounterTexts": ["The paladin hoists his axe onto his shoulder, and bounces it on his shoulder.\n", "The paladin lets out a hearty warcry.\n", "The paladin adjusts his helmet.\n"]
+  },
+  "wave clacker": {
+    "health": 19,
+    "atk": 16,
+    "def": 10,
+    "crit": 5,
+    "miss": 20,
+    "xpYield": 9,
+    "moneyYield": 11,
+    "initialText": "This trig student got a little too into graphs, so he got clackers just so he could have something to model. Unfortunately, those clackers are also pretty lethal, and heading right for you.\n",
+    "encounterTexts": ["The student lets his clackers swing as he visualizes a graph.\n", "The student slows down the clackers to rest his hand.\n", "The student's clackers slip out of his hand and into a wall, so he goes and grabs them.\n"]
+  },
+  "trigbot": {
+    "health": 22,
+    "atk": 14,
+    "def": 12,
+    "crit": 5,
+    "miss": 20,
+    "xpYield": 10,
+    "moneyYield": 8,
+    "initialText": "Someone got too tired of using their calculator for trig functions, so they made this robot to do it for them. They forgot to program the 3 laws of robotics, so it's also murderous.\n",
+    "encounterTexts": ["The robot sees a mouse, then starts trying to kill it.\n", "The robot sees a triangle on a wall and immediately tries to solve it.\n", "The robot starts thinking of the best way to cut you into triangles.\n"]
+  },
+  "enlightened bogey": {
+    "health": 20,
+    "atk": 15,
+    "def": 14,
+    "crit": 5,
+    "miss": 20,
+    "xpYield": 8,
+    "moneyYield": 9,
+    "initialText": "A bogey managed to get its hands on a textbook, learning so much from it that it has ascended to a new plane of consciousness. Not that it doesn't have a physical body it's trying to attack you with.\n",
+    "encounterTexts": ["The bogey seems to be reading another textbook in its mind.\n", "The bogey tries to make a textbook appear, but forgets it can't do that in the physical world.\n", "The bogey starts dancing, but nothing happens.\n"]
+  },
+  "multiplication mage": {
+    "health": 25,
+    "atk": 20,
+    "def": 19,
+    "crit": 10,
+    "miss": 5,
+    "xpYield": 15,
+    "moneyYield": 13,
+    "initialText": "This student read a forbidden textbook and gained power over multiplication. Now he can multiply the number of stab wounds you have with his darts.\n",
+    "encounterTexts": ["The mage reminisces about the time he gave someone 28 stab wounds.\n", "The mage tries to multiply himself, then realizes he has no idea how clones work.\n", "The mage restocks his dart supply.\n"]
+  },
+  "straight-curve samurai": {
+    "health": 27,
+    "atk": 25,
+    "def": 23,
+    "crit": 20,
+    "miss": 20,
+    "xpYield": 17,
+    "moneyYield": 15,
+    "initialText": "When this student had to show off a visual example of derivatives in his calculus class, he decided to use a real katana. Everyone stopped laughing when he cut them all in half.\n",
+    "encounterTexts": ["The samurai does some practice swings.\n", "The samurai yells out a one-liner like an anime protagonist.\n", "The samurai starts talking about waifus, but you immediately tune him out.\n"]
+  },
+  "l'hôpital boxer": {
+    "health": 25,
+    "atk": 28,
+    "def": 22,
+    "crit": 20,
+    "miss": 20,
+    "xpYield": 19,
+    "moneyYield": 17,
+    "initialText": "This student is at the top of his calc class. He also happens to be a boxer that is planning on sending you to the hospital.\n",
+    "encounterTexts": ["The boxer does some practice jabs.\n", "The boxer starts jumping around to psych himself up.\n", "The boxer punches a nearby wall.\n"]
+  },
+  "integrating pyromaniac": {
+    "health": 28,
+    "atk": 24,
+    "def": 27,
+    "crit": 20,
+    "miss": 20,
+    "xpYield": 16,
+    "moneyYield": 20,
+    "initialText": "This student likes to \"integrate\" stuff by melting them together with fire. He isn't that good at actual integration, though.\n",
+    "encounterTexts": ["The pyromaniac strikes his lighter a few times.\n", "The pyromaniac thinks about making molotovs, then remembers he doesn't have alcohol on him.\n", "The pyromaniac checks how many matches he has in his matchbox.\n"]
+  },
+  "division gunner": {
+    "health": 30,
+    "atk": 29,
+    "def": 31,
+    "crit": 40,
+    "miss": 25,
+    "xpYield": 20,
+    "moneyYield": 18,
+    "initialText": "Unlike the other bosses, the Division Gunner went for full efficiency in his fighting power. That's why he's aiming 2 custom-made  at you.\n"
   }
 }
 
@@ -196,22 +329,11 @@ enemyNames1 = ["bogey", "rotten apple", "dark cloud", "addition ninja"] # creati
 
 enemyNames2 = ["angry student", "apple muncher", "quadratic enthusiast", "subtraction paladin"]
 
-enemyNames3 = ["", "", "", ""]
+enemyNames3 = ["wave clacker", "trigbot", "enlightened bogey", "multiplication mage"]
 
-enemyNames4 = ["", "", "", ""]
+enemyNames4 = ["deriving samurai", "l'hôpital boxer", "integrating pyromaniac", "division gunner"]
 
 enemyPools = [enemyNames1, enemyNames2, enemyNames3, enemyNames4]
-
-enemyNameCaps1 = {
-  "bogey": "Bogey",
-  "rotten apple": "Rotten apple",
-  "dark cloud": "Dark cloud",
-  "addition ninja": "Addition ninja",
-  "angry student": "Angry student",
-  "apple muncher": "Apple muncher",
-  "quadratic enthusiast": "Quadratic enthusiast",
-  "subtraction paladin": "Subtraction paladin"
-}
 
 tileSymbol = {
   "c": "+",
@@ -237,8 +359,8 @@ playerStats = { # dict to store player stats
   "money": 0,
   "xp": 1, # as a level
   "xpProg": 0, # out of number determined by xp level
-  "crit": 0.05, # chance as a %
-  "miss": 0.05, # chance as a %
+  "crit": 15, # chance as a %
+  "miss": 10, # chance as a %
   "buffs": {
     "atk": {},
     "def": {}
@@ -284,13 +406,70 @@ floorMath = [
     "True or false: all coefficients must be integers in a standard form linear equation.": "true",
   },
   {
-    
+    "What is the x-coordinate of the vertex of equation y = 2x^2 - 12x + 5?": 3,
+    "What is the positive root of equation y = x^2 + x - 6?": 2,
+    "Fill in the blank: located in the quadratic formula, the ___ allows us to deduce the number of real roots of a quadratic equation.": "discriminant",
+    "True or false: a quadratic can have 1-2 real roots.": "false",
+    "What is x, if x is positive and 2x^2 - 5x - 12 = 0?": 4,
+    "How many different quadratic forms are there?": 3,
+    "What is the value of the definite integral from e^2 to e^14 of ln(x)/x dx?": 96,
+    "Fill in the blank: the similar triangle congruencies are commonly abbreviated as AA, SAS, and ___.": "SSS",
+    "True or false: sin(x) represents h/o, where h is the hypotenuse side and o is the opposite side.": "false",
+    "Fill in the blank: the two methods to solving systems of equations are called substitution and ___.": "elimination",
+    "Fill in the blank: inverse cosine has three names—cos^-1, ___, and arccos.": "acos",
+    "True or false: the sine law works for any right triangle.": "true",
+    "True or false: the trigonometric ratios can be used to identify missing side lengths and angles in any triangle.": "false",
+    "True or false: the cosine law works for any triangle, EVEN non-right triangles.": "true",
+    "What is the line drawn from the vertex of a triangle to the midpoint of the opposite side called?": "median",
+    "At what value x in degrees are sin(x) and cos(x) equal?": 45,
+    "True or false: you can complete the square for any quadratic equation.": "true",
+    "What is the shape of a quadratic equation's graph called?": "parabola",
+    "Fill in the blank: the graph of y = x^2 - 5x + 17 opens ___.": "up",
+    "What is the value of (sin(60 deg))^2 + (cos(60 deg))^2?": 1
   },
   {
-    
+    "If f(x) = x^2 + 6, what is f(3)?": 15,
+    "True or false: the harmonic series converges.": "false",
+    "What is cos(60 deg) as a fraction?": "1/2",
+    "What is the parent function of 1/(x + 6)?": "1/x",
+    "Calculate 5 + 15 + 45... to 17 terms.": 322850405,
+    "Calculate 4 + 7 + 11... to 53 terms.": 4346,
+    "Fill in the blank: in any expression y = a*f(k(x - d)) + c, k represents the ___ compression.": "horizontal",
+    "Evaluate 125^(5/3).": 3125,
+    "Evaluate log(100).": 2,
+    "Fill in the blank: the range of y = (x - 4)^2 + 3 is {y | y ∈ R, y ≥ ___}": 3,
+    "True or false: domain describes the possible values of a function's output.": "false",
+    "True or false: sin(30 deg) = cos(60 deg).": "true",
+    "If f(x) = sqrt(x) and g(x) = 5x - 6, what is f(g(11))?": "7",
+    "True or false: sqrt(x) = x^(1/2).": "true",
+    "Evaluate 27^(2/3).": "9",
+    "Is pattern 7, 35, 175... arithmetic or geometric?": "geometric",
+    "True or false: sqrt(44) can be simplified.": "true",
+    "True or false: sec(x) = 1/sin(x), csc(x) = 1/cos(x), and cot(x) = 1/tan(x).": "false",
+    "What is the constant term in the simplified expression of sin^2(x)/(cos(x) + 1)?": 1,
+    "What is (cos(30 deg))^2 as a fraction?": "3/4",
   },
   {
-    
+    "What is the derivative of x^2?": "2x",
+    "True or false: the derivative of cos(x) is sin(x).": "false",
+    "What is the derivative of ln(3x^12) evaluated at 4?": 3,
+    "What is x if log(cbrt(x + 2)) = 1/3?": 8,
+    "True or false: there is no remainder when x^3 - 2x^2 + 1 is divided by x - 1.": "true",
+    "Evaluate f''(-1), if f(x) = 8x^5.": -160,
+    "What is the slope, in x and y, on any point of equation x^2 + y^2 = 1?": "-x/y",
+    "Fill in the blank: when we want to differentiate an equation with no isolated variable (i.e. that is not a function), we use ___ differentiation.": "implicit",
+    "What is the derivative of any constant C?": 0,
+    "True or false: a function is differentiable over interval [a, b] if it is also continuous over interval [a, b].": "false",
+    "What is the 483rd derivative of -sin(x) evaluated at 0?": 1,
+    "What is the 1729th derivative of e^x evaluated at 0?": "1",
+    "Fill in the blank: if a function's derivative changes signs before and after a point, the point is labeled an ___ on the original graph.": "extremum",
+    "Fill in the blank: if a function's second derivative changes signs before and after a point, the point is labeled a ___ on the original graph.": "point of inflection",
+    "True or false: the limit of (-1)^x as x approaches positive infinity is 0.": "false",
+    "Fill in the blank: the property of an infinite sum equaling a finite value is referred to as ___.": "convergence",
+    "What are the sum of the numerators in the partial fraction expansion of 3/(x^2 + 5x + 6)?": 0,
+    "True or false: the derivative of tan(x) is -sec^2(x).": "false",
+    "Fill in the blank: the derivative of x^2*sin(x) is ___*x^2 + 2x*sin(x)": "cos(x)",
+    "Fill in the blank: the derivative of arctan(x) is 1/(___ + x^2).": "1",
   }
 ]
 
@@ -298,7 +477,7 @@ def stats():
   print(f"Level: {playerStats['xp']}")
   if playerStats["xp"] <= len(xpLevelToProg):
     print(f"XP: {playerStats['xpProg']}/{xpLevelToProg[playerStats['xp'] - 1]}")
-  print(f"HP: {playerStats['health']}")
+  print(f"HP: {playerStats['health']}/{levelToHealthMax[playerStats['xp'] - 1]}")
   for i in range(math.ceil(playerStats["health"] / (levelToHealthMax[playerStats["xp"] - 1] / 10))):
     print("█", end="")
   print()
@@ -445,7 +624,7 @@ def combat1(boss = False):
     combatPointer1 = [" ", " "]
     combatPointer1.insert(combatPI1, "^")
     print(" " + "   ".join(combatPointer1) + "\n")
-    print(f"HP: {playerStats['health']}")
+    print(f"HP: {playerStats['health']}/{levelToHealthMax[playerStats['xp'] - 1]}")
     for i in range(math.ceil(playerStats["health"] / (levelToHealthMax[playerStats["xp"] - 1] / 10))):
       print("█", end="")
     print()
@@ -468,9 +647,17 @@ def combat1(boss = False):
       del playerStats["buffs"]["atk"][i]
     a = math.floor(3**(1 + 0.1*playerStats["xp"]))
     b = math.ceil(5**(1 + 0.1*playerStats["xp"]))
-    playerAtkInt1 = random.randint(a, b) + playerStats["atk"]
+    miss = random.randint(1, 100)
+    crit = random.randint(1, 100)
+    if miss <= playerStats["miss"]:
+      print("You missed!")
+    elif crit <= playerStats["crit"]:
+      playerAtkInt1 = 1.5 * (random.randint(a, b) / (enemies["enemy"] // 2)) + playerStats["atk"]
+      print(f"Critical hit! You dealt {playerAtkInt1} damage to the {enemyName1.title()}!\n")
+    else: 
+      playerAtkInt1 = random.randint(a, b) / (enemies["enemy"] // 2) + playerStats["atk"]
+      print(f"You dealt {playerAtkInt1} damage to the {enemyName1.title()}!\n")
     currentEnemyHealth1 -= playerAtkInt1
-    print(f"You dealt {playerAtkInt1} damage to the {enemyNameCaps1[enemyName1]}!\n")
 
   def enemyAtk1():
     global enemy1
@@ -483,17 +670,18 @@ def combat1(boss = False):
         removeQueue.add(i)
     for i in removeQueue:
       del playerStats["buffs"]["def"][i]
-    chance = random.randint(1, 100)
-    if chance <= enemy1["miss"]:
-      print(f"{enemyNameCaps1[enemyName1]} missed!")
-    elif chance >= enemy1["crit"]:
+    miss = random.randint(1, 100)
+    crit = random.randint(1, 100)
+    if miss <= enemy1["miss"]:
+      print(f"{enemyName1.title()} missed!")
+    elif crit <= enemy1["crit"]:
       enemyAtkInt1 = max(math.floor(1.5*random.randint(enemy1["atk"] - 1, enemy1["atk"] + 1)) - playerStats["def"], 0)
       playerStats["health"] -= enemyAtkInt1
-      print(f"Critical! {enemyNameCaps1[enemyName1]} deals {enemyAtkInt1} damage.")
+      print(f"Critical! {enemyName1.title()} deals {enemyAtkInt1} damage.")
     else:
       enemyAtkInt1 = random.randint(enemy1["atk"] - 1, enemy1["atk"] + 1)
       playerStats["health"] -= enemyAtkInt1
-      print(f"{enemyNameCaps1[enemyName1]} deals {enemyAtkInt1} damage.")
+      print(f"{enemyName1.title()} deals {enemyAtkInt1} damage.")
 
   def enemyDeath1():
     print(f"You killed the {enemyName1}.")
@@ -501,7 +689,7 @@ def combat1(boss = False):
     moneyGain1 = random.randint(enemy1["moneyYield"] - 1, enemy1["moneyYield"] + 1)
     playerStats["xpProg"] += xpGain1
     playerStats["money"] += moneyGain1
-    if len(xpLevelToProg) < playerStats["xp"]:
+    if len(xpLevelToProg) == playerStats["xp"]:
       print("You're at max level!")
     else: 
       if playerStats["xpProg"] >= xpLevelToProg[playerStats["xp"] - 1]:
@@ -547,7 +735,7 @@ def combat1(boss = False):
       elif combatPI1 == 2:
         run(playerStats["floor"])
         if runSuccess == True:
-          print(f"\nYou fled from the {enemyNameCaps1[enemyName1]}.\n")
+          print(f"\nYou fled from the {enemyName1.title()}.\n")
           runSuccess = False
           return
         else:
@@ -594,15 +782,15 @@ def inv():
         invRefresh()
       if confirm == keys.ENTER:
         if items1[currentItem + "s"] == "health":
-          playerStats["health"] += items1[currentItem + "c"]
-          print(f"{items1[currentItem + 'c']} HP was restored. You now have {playerStats['health']} hp.")
+          playerStats["health"] += items1[currentItem + "b"]
+          print(f"{items1[currentItem + 'b']} HP was restored. You now have {playerStats['health']} hp.")
           del playerInv[invPI]
         elif items1[currentItem + "s"] == "unusable":
           print(items1[currentItem + "c"] + "\n")
         else:
-          playerStats["buffs"][items1[currentItem + "s"]][currentItem] = {"change": items1[currentItem + "c"], "duration": items1[currentItem + "t"]}
+          playerStats["buffs"][items1[currentItem + "s"]][currentItem] = {"change": items1[currentItem + "b"], "duration": items1[currentItem + "t"]}
           playerStats[items1[currentItem + "s"]] += items1[currentItem + "c"]
-          print(f"New buff: +{items1[currentItem + 'c']} {statToName[items1[currentItem + 's']]} for {items1[currentItem + 't']} turns.\n")
+          print(f"New buff: +{items1[currentItem + 'b']} {statToName[items1[currentItem + 's']]} for {items1[currentItem + 't']} turns.\n")
           del playerInv[invPI]
         return
       else:
@@ -638,7 +826,9 @@ def shop1():
   global shopPointerIndex1
   global itemState1  
   random.shuffle(itemPools[playerStats["floor"]])
-  itemList1 = itemPools[playerStats["floor"]][:3]
+  itemList1 = shopPools[playerStats["floor"]]
+  if len(itemList1) == 0:
+    itemList1 = itemPools[playerStats["floor"]][:3]
   shopPointerIndex1 = 0
   itemChar1 = ["# ", "x "]
   def shopPointer1Refresh():
@@ -649,9 +839,10 @@ def shop1():
     for i in range(3):
       itemDisplay1 += itemChar1[itemState1[i]]
     print(itemDisplay1)
-    print(" ".join(itemPointer1) + "\n")
+    print(" ".join(itemPointer1))
+    print(f"Money: ${playerStats['money']}\n")
   def itemDesc1(itemName):
-    print(f"Item: {itemNameCaps1[itemName]}\nDescription: {items1[itemName]}\nCost: {items1[itemName + 'c']}\n\nDo you wish to buy this item? (Press enter again to buy the item. Press esc to go back.)\n")
+    print(f"Item: {itemName.title()}\nDescription: {items1[itemName]}\nCost: {items1[itemName + 'c']}\n\nDo you wish to buy this item? (Press enter again to buy the item. Press esc to go back.)\n")
     while True:
       try:
         e = getkey()
@@ -662,7 +853,7 @@ def shop1():
           print("You can't afford that!")
         else:
           playerInv.append(itemName)
-          print(f"You have bought the {itemNameCaps1[itemName]}!\n")
+          print(f"You have bought the {itemName.title()}!\n")
           itemState1[shopPointerIndex1] += 1
           playerStats["money"] -= items1[itemName + "c"]
         shopPointer1Refresh()
@@ -697,12 +888,15 @@ def shop1():
 def save():
   db["save"] = playerStats.copy() # put current player info in db
   db["inv"] = playerInv.copy()
+  db["shop"] = shopPools.copy()
 
 def load():
   global playerStats
   global playerInv
+  global shopPools
   playerStats = db["save"].copy() # take saved player info from db
   playerInv = db["inv"].copy()
+  shopPools = db["shop"].copy()
 
 def printMap():
   for x in range(len(map)):
