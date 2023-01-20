@@ -31,33 +31,51 @@ playerInv = []
 
 items1 = { # floor 1 items along with their flavour texts
   "bread": "A rather stale loaf of bread. Heals 15 HP.",
-  "breadc": 5,
+  "breadc": 15,
   "breads": "health",
   "chocolate stick": "Not a bar, but a stick of chocolate. Like the ones you break apart into two. Heals 23 HP.",
-  "chocolate stickc": 7,
+  "chocolate stickc": 23,
   "chocolate sticks": "health",
   "extra sharp stick": "An extra sharp stick. Nice! Deals 5 more damage on your next attack when used.",
   "extra sharp stickc": 5,
   "extra sharp sticks": "atk",
   "extra sharp stickt": 1,
   "crumb": "A strange looking crumb. You're not sure where this came from. Heals 10 HP.",
-  "crumbc": 3,
+  "crumbc": 10,
   "crumbs": "health",
   "dusty textbook": "You aren't sure why, but you feel compelled to read it out loud. Decreases damage by 5 for 3 attacks.",
   "dusty textbookc": 5,
   "dusty textbooks": "def",
   "dusty textbookt": 3,
   "study note 1": "Dropped by the addition ninja. Seems to be grade 9 material.",
+  "apple": "",
   "study note 1c": "put note here",
   "study note 1s": "unusable",
-  "study note 2": "Dropped by the s,ubtraction paladin. Seems to be grade 10 material.",
+  "apple core": "A rotten apple core. Smells rancid. Decreases damage by 7 for 1 turn.",
+  "apple corec": 6,
+  "apple cores": "def",
+  "apple coret": 1,
+  "empty crate": "The apples all around this floor have to be carried somehow. Deals 6 more damage for your next 4 attacks.",
+  "empty cratec": 8,
+  "empty crates": "atk",
+  "empty cratet": 4,
+  "instant boba": "Bubble tea made from powder packets and milk. Not as good as the real thing, but gets the job done. Heals 17 HP.",
+  "instant bobac": 17,
+  "instant bobas": "health",
+  "protein bar": "Doesn't taste great, but it's healthy. Heals 13 HP.",
+  "protein barc": 13,
+  "protein bars": "health",
+  "breakfast burger": "Egg inbetween 2 english muffins. Filling enough to start your day. Heals 27 HP.",
+  "breakfast burgerc": 27,
+  "breakfast burgers": "health",
+  "study note 2": "Dropped by the subtraction paladin. Seems to be grade 10 material.",
   "study note 2c": "put note here",
   "study note 2s": "unusable"
 }
 
 itemNames1 = ["bread", "chocolate stick", "extra sharp stick", "crumb", "dusty textbook"]
 
-itemNames2 = [""]
+itemNames2 = ["apple core", "empty crate", "instant boba", "protein bar", "breakfast burger"]
 
 itemNames3 = []
 
@@ -73,7 +91,13 @@ itemNameCaps1 = {
   "extra sharp stick": "Extra Sharp Stick",
   "crumb": "Crumb",
   "dusty textbook": "Dusty Textbook",
-  "study note 1": "Study Note 1"
+  "study note 1": "Study Note 1",
+  "apple core": "Apple Core",
+  "empty crate": "Empty Crate",
+  "instant boba": "Instant Boba",
+  "protein bar": "Protein Bar",
+  "breakfast burger": "Breakfast Burger",
+  "study note 2": "Study Note 2"
 }
 
 enemies = {
@@ -127,10 +151,32 @@ enemies = {
     "def": 6,
     "crit": 1,
     "miss": 20,
-    "xpYield": 7,
+    "xpYield": 8,
     "moneyYield": 9,
     "initialText": "This student cracked under pressure and is now killing anything that moves. Which means you.\n",
     "encounterTexts": ["The student punches a wall.\n", "The student starts screaming.\n", "The student tries deep breathing, but it does nothing.\n"]
+  },
+  "apple muncher": {
+    "health": 15,
+    "atk": 6,
+    "def": 9,
+    "crit": 1,
+    "miss": 20,
+    "xpYield": 6,
+    "moneyYield": 10,
+    "initialText": "Remember those math problems where someone buys a massive number of apples? This is that someone, and he's not moving out of your way.",
+    "encounterTexts": ["The muncher tries to get an apple, but only gets a core.\n", "The muncher places an order for more apples.\n", "The muncher raves on about apples. You tune him out.\n"]
+  },
+  "quadratic enthusiast": {
+    "health": 13,
+    "atk": 8,
+    "def": 7,
+    "crit": 1,
+    "miss": 20,
+    "xpYield": 7,
+    "moneyYield": 8,
+    "initialText": "This little prankster likes to throw baseballs at the perfect angle to hit someone in the head. How does he do it? He got a little too into graphing parabolas.",
+    "encounterTexts": ["The enthusiast throws a ball at a wall, then tries to find the equation of its arc.\n", "The enthusiast throws a ball at a muncher. It lands.\n", "The enthusiast answers an angry call.\n"]
   },
   "subtraction paladin": {
     "health": 18,
@@ -140,7 +186,7 @@ enemies = {
     "miss": 20,
     "xpYield": 11,
     "moneyYield": 9,
-    "initialText": "A theater student that also happens to be into math got a little too into his role as a paladin. Now he has a god complex and fights anyone he sees.",
+    "initialText": "A theatre student that also happens to be into math got a little too into his role as a paladin. Now he has a god complex and fights anyone he sees.",
     "encounterTexts": ["The paladin hoists his axe onto his shoulder, and bounces it on his shoulder.\n", "The paladin lets out a hearty warcry.\n", "The paladin adjusts his helmet.\n"]
   }
 }
@@ -148,21 +194,23 @@ enemies = {
 # when adding bosses, make sure you put the boss name last for easy grabbing
 enemyNames1 = ["bogey", "rotten apple", "dark cloud", "addition ninja"] # creativity juice needed
 
-enemyNames2 = ["angry student", "subtraction paladin"]
+enemyNames2 = ["angry student", "apple muncher", "quadratic enthusiast", "subtraction paladin"]
 
-enemyNames3 = []
+enemyNames3 = ["", "", "", ""]
 
-enemyNames4 = []
+enemyNames4 = ["", "", "", ""]
 
 enemyPools = [enemyNames1, enemyNames2, enemyNames3, enemyNames4]
 
 enemyNameCaps1 = {
   "bogey": "Bogey",
-  "rotten apple": "Rotten Apple",
-  "dark cloud": "Dark Cloud",
-  "addition ninja": "Addition Ninja",
-  "angry student": "Angry Student",
-  "subtraction paladin": "Subtraction Paladin"
+  "rotten apple": "Rotten apple",
+  "dark cloud": "Dark cloud",
+  "addition ninja": "Addition ninja",
+  "angry student": "Angry student",
+  "apple muncher": "Apple muncher",
+  "quadratic enthusiast": "Quadratic enthusiast",
+  "subtraction paladin": "Subtraction paladin"
 }
 
 tileSymbol = {
@@ -207,28 +255,33 @@ xpLevelToProg = [
   15
 ]
 
+levelToHealthMax = [
+  100,
+  200
+]
+
 floorMath = [
   {
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
-    "grade 9 problem": "answer",
+    "What is the slope of equation y = 2x + 3?": 2,
+    "Fill in the blank: the Basel problem describes the sum of the ___ of all squares.": "reciprocals",
+    "What is the midpoint of line AB if A = (2, 3) and B = (4, -1)?": "(3, 1)",
+    "What is the first term of polynomial 4x + 7x^3 - 13 in standard form?": "7x^3",
+    "What is the coefficient of x^2 after combining like terms in polynomial 7y + 9x - 3x^2 + 3y + 2x^2?": -1,
+    "When multiplying terms with the same base, do you add or multiply their powers?": "add",
+    "What is x, if 24x - 5 = 43?": 2,
+    "What is x, if x/3 = 8?": 24,
+    "What is the y coordinate of the y-intercept in equation y = 2x + 9?": 9,
+    "What is the slope of equation 3y - 15 = 21x?": 7,
+    "What is the y coordinate of the y-intercept in equation 6y - 2x = 18?": 3,
+    "What is the degree of polynomial x^2 * y^3 + xy^2 - 5?": 5,
+    "How many degrees do the angles of a triangle add up to?": 180,
+    "Triangle ABC has side lengths AB = 5, AC = 13, and angle ABC = 90 degrees. What is the length of side BC?": 12,
+    "How many degrees do a pair of complementary angles add up to?": 90,
+    "How many degrees do a pair of supplementary angles add up to?": 180,
+    "Fill in the blank: two lines are ___ when they intersect at a 90 degree angle.": "perpendicular",
+    "What is the slope of y = 3?": 0,
+    "What is the x coordinate of the point of intersection between lines y = 2x + 3 and y = 8x - 9?": 2,
+    "True or false: all coefficients must be integers in a standard form linear equation.": "true",
   },
   {
     
@@ -240,6 +293,21 @@ floorMath = [
     
   }
 ]
+
+def stats():
+  print(f"Level: {playerStats['xp']}")
+  if playerStats["xp"] <= len(xpLevelToProg):
+    print(f"XP: {playerStats['xpProg']}/{xpLevelToProg[playerStats['xp'] - 1]}")
+  print(f"HP: {playerStats['health']}")
+  for i in range(math.ceil(playerStats["health"] / (levelToHealthMax[playerStats["xp"] - 1] / 10))):
+    print("█", end="")
+  print()
+  print(f"Money: ${playerStats['money']}")
+  if playerStats["atk"] > 0:
+    print(f"Extra damage: {playerStats['atk']}")
+  if playerStats["def"] > 0:
+    print(f"Damage reduction: {playerStats['def']}")
+  print()
 
 def printRoom(room):
   for y in range(len(room[0])): # column
@@ -254,6 +322,7 @@ def printRoom(room):
         print(tileSymbol[tile] + " ", end = "")
     print() # print \n after each row
   print() # print line break after printing room
+  stats()
 
 playerRoom = master[playerStats["floor"]][playerStats["room"]]
 
@@ -304,7 +373,14 @@ def move(direction):
     if playerRoom[playerStats["x"]][playerStats["y"]] == "d":
       if playerStats["mapStates"][playerStats["floor"]][4] or playerStats["room"] + playerRoom[-1][tuple([playerStats["x"], playerStats["y"]])] == 4: # first check is simply to see if player visited boss room. if they did, don't fight boss
         print("You feel uneasy, do you want to proceed? (Boss room ahead, press enter to move forward)")
-        e = getkey()
+        try: # pressing ctrl c throws a keyboard interrupt error, so we gotta do this try catch every time we get a key
+          e = getkey()
+        except KeyboardInterrupt:
+          print("Going back...")
+          playerStats["x"] -= dirToCoord[direction + "x"]
+          playerStats["y"] -= dirToCoord[direction + "y"]
+          printRoom(playerRoom)
+          return
         if e == keys.ENTER:
           combat1(boss=True)
           if playerRoom[playerStats["x"]][playerStats["y"]] != "d":
@@ -334,8 +410,8 @@ def move(direction):
       print("Autosaving...")
       save()
       print("Done!")
-    if playerStats["health"] < 100:
-      playerStats["health"] = min(100, playerStats["health"] + 2)
+    if playerStats["health"] < levelToHealthMax[playerStats["xp"] - 1]:
+      playerStats["health"] = min(levelToHealthMax[playerStats["xp"] - 1], playerStats["health"] + 2)
     if 1 <= encounter <= 15:
       playerStats["currentChar"] = "!"
       printRoom(playerRoom)
@@ -347,7 +423,7 @@ def move(direction):
 
 runSuccess = False
 
-def combat1(boss=False):
+def combat1(boss = False):
   global combatPI1
   global enemy1
   global currentEnemyHealth1
@@ -356,6 +432,8 @@ def combat1(boss=False):
     enemyName1 = enemyPools[playerStats["floor"]][-1]
   else:
     enemyName1 = random.choice(enemyPools[playerStats["floor"]][:3])
+    while enemyName1 == enemyPools[playerStats["floor"]][-1]:
+      enemyName1 = random.choice(enemyPools[playerStats["floor"]])
     while enemyName1 == enemyPools[playerStats["floor"]][-1]:
       enemyName1 = random.choice(enemyPools[playerStats["floor"]])
   enemy1 = enemies[enemyName1]
@@ -368,6 +446,9 @@ def combat1(boss=False):
     combatPointer1.insert(combatPI1, "^")
     print(" " + "   ".join(combatPointer1) + "\n")
     print(f"HP: {playerStats['health']}")
+    for i in range(math.ceil(playerStats["health"] / (levelToHealthMax[playerStats["xp"] - 1] / 10))):
+      print("█", end="")
+    print()
     if playerStats["atk"] > 0:
       print(f"Extra damage: {playerStats['atk']}")
     if playerStats["def"] > 0:
@@ -440,7 +521,10 @@ def combat1(boss=False):
     if currentEnemyHealth1 <= 0:
       enemyDeath1()
       return
-    e = getkey()
+    try:
+      e = getkey()
+    except KeyboardInterrupt:
+      continue
     if e == keys.LEFT:
       combatPI1 = (combatPI1 - 1) % 3
       combatPointer1Refresh()
@@ -456,14 +540,14 @@ def combat1(boss=False):
           load()
           return
         print(random.choice(enemy1["encounterTexts"]))
-        combatPointer1Refresh()# its good now !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        combatPointer1Refresh()
       elif combatPI1 == 1:
         inv()
         combatPointer1Refresh()
       elif combatPI1 == 2:
         run(playerStats["floor"])
         if runSuccess == True:
-          print(f"You fled from the {enemyNameCaps1[enemyName1]}\n.")
+          print(f"\nYou fled from the {enemyNameCaps1[enemyName1]}.\n")
           runSuccess = False
           return
         else:
@@ -491,7 +575,10 @@ def inv():
   invRefresh() # initial inv display
   
   while True:
-    e = getkey()
+    try:
+      e = getkey()
+    except KeyboardInterrupt:
+      continue
     if e == keys.UP:
       (invPI - 1) % 3
     elif e == keys.DOWN:
@@ -501,7 +588,10 @@ def inv():
       print()
       print(items1[currentItem] + "\n")
       print("Would you like to use this item? Press enter again to confirm.")
-      confirm = getkey()
+      try:
+        confirm = getkey()
+      except KeyboardInterrupt:
+        invRefresh()
       if confirm == keys.ENTER:
         if items1[currentItem + "s"] == "health":
           playerStats["health"] += items1[currentItem + "c"]
@@ -523,9 +613,9 @@ def inv():
 def run(floor):
   global runSuccess
   mathProblem = random.choice(list(floorMath[floor].keys()))
-  mathSolution = floorMath[floor][mathProblem]
-  print(f"In order to run you must solve the following problem: {mathProblem}")
-  mathSolInput = input("Enter: ")
+  mathSolution = str(floorMath[floor][mathProblem])
+  print(f"In order to run you must solve the following problem:\n{mathProblem}")
+  mathSolInput = input("Enter: ").lower()
   if mathSolInput == mathSolution:
     runSuccess = True
     return
@@ -563,7 +653,10 @@ def shop1():
   def itemDesc1(itemName):
     print(f"Item: {itemNameCaps1[itemName]}\nDescription: {items1[itemName]}\nCost: {items1[itemName + 'c']}\n\nDo you wish to buy this item? (Press enter again to buy the item. Press esc to go back.)\n")
     while True:
-      e = getkey()
+      try:
+        e = getkey()
+      except KeyboardInterrupt:
+        continue
       if e == keys.ENTER:
         if items1[itemName + "c"] > playerStats["money"]:
           print("You can't afford that!")
@@ -579,7 +672,10 @@ def shop1():
         return
   shopPointer1Refresh()
   while True:
-    e = getkey()
+    try:
+      e = getkey()
+    except KeyboardInterrupt:
+      continue
     if e == keys.LEFT:
       shopPointerIndex1 = (shopPointerIndex1 - 1) % 3
       shopPointer1Refresh()
@@ -624,24 +720,15 @@ def printMap():
           print(map[x][y], end="")
     print()
 
-def stats():
-  print(f"Level: {playerStats['xp']}")
-  if playerStats["xp"] <= len(xpLevelToProg):
-    print(f"XP: {playerStats['xpProg']}/{xpLevelToProg[playerStats['xp'] - 1]}")
-  print(f"HP: {playerStats['health']}")
-  print(f"Money: ${playerStats['money']}")
-  if playerStats["atk"] > 0:
-    print(f"Extra damage: {playerStats['atk']}")
-  if playerStats["def"] > 0:
-    print(f"Damage reduction: {playerStats['def']}")
-  print()
-
 if "save" in db.keys():
   load()
 
 while run: # game loop
   # if player xp is sufficient run levelup
-  e = getkey()
+  try:
+    e = getkey()
+  except KeyboardInterrupt:
+    continue
   if e == keys.UP:
     move("up")
   elif e == keys.DOWN:
@@ -654,11 +741,13 @@ while run: # game loop
     printMap()
   elif e.lower() == "i":
     inv()
-  elif e.lower() == "s":
-    stats()
   elif e == keys.ESCAPE:
     print("Would you like to quit Math Temple? Press esc again to quit.")
-    quitConfirm = getkey()
+    try:
+      quitConfirm = getkey()
+    except KeyboardInterrupt:
+      print("Back to Math Temple!")
+      continue
     if quitConfirm == keys.ESCAPE:
       print("Goodbye!")
       run = False
