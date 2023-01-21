@@ -7,20 +7,22 @@ run = True # keep game running
 
 vwall = ["c", "v", "v", "v", "v", "v", "v", "c"] # vertical wall
 
-room0 = [vwall, ["h", "s", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], vwall, {tuple([5, 0]): 1}]
+room10 = [vwall, ["h", "s", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], vwall, {tuple([5, 0]): 1}]
 
-room1 = [vwall, ["h", "e", "h", "e", "e", "e", "e", "h"], ["d", "e", "h", "e", "e", "e", "e", "h"], ["h", "e", "h", "e", "e", "h", "e", "h"], ["h", "e", "h", "e", "e", "h", "e", "h"], ["h", "e", "h", "e", "e", "h", "e", "d"], ["h", "e", "h", "e", "e", "h", "e", "h"], ["h", "e", "e", "e", "e", "h", "e", "h"], ["h", "e", "e", "e", "e", "h", "e", "h"], vwall, {tuple([5, 7]): -1, tuple([2, 0]): 1}]
+room11 = [vwall, ["h", "e", "h", "e", "e", "e", "e", "h"], ["d", "e", "h", "e", "e", "e", "e", "h"], ["h", "e", "h", "e", "e", "h", "e", "h"], ["h", "e", "h", "e", "e", "h", "e", "h"], ["h", "e", "h", "e", "e", "h", "e", "d"], ["h", "e", "h", "e", "e", "h", "e", "h"], ["h", "e", "e", "e", "e", "h", "e", "h"], ["h", "e", "e", "e", "e", "h", "e", "h"], vwall, {tuple([5, 7]): -1, tuple([2, 0]): 1}]
 
-room2 = [["c", "v", "v", "d", "v", "v", "v", "c"], ["h", "v", "e", "e", "e", "h", "e", "h"], ["h", "e", "e", "h", "e", "e", "e", "h"], ["h", "v", "e", "e", "e", "h", "e", "h"], ["h", "e", "e", "h", "e", "e", "e", "h"], ["h", "v", "e", "e", "e", "h", "e", "h"], ["h", "e", "e", "h", "e", "e", "e", "h"], ["h", "v", "e", "e", "e", "h", "e", "h"], ["h", "e", "e", "h", "e", "e", "e", "h"], ["c", "v", "d", "v", "v", "v", "v", "c"], {tuple([2, 0]): -1, tuple([0, 3]): 1, tuple([9, 2]): 2}]
+room12 = [["c", "v", "v", "d", "v", "v", "v", "c"], ["h", "v", "e", "e", "e", "h", "e", "h"], ["h", "e", "e", "h", "e", "e", "e", "d"], ["h", "v", "e", "e", "e", "h", "e", "h"], ["h", "e", "e", "h", "e", "e", "e", "h"], ["h", "v", "e", "e", "e", "h", "e", "h"], ["h", "e", "e", "h", "e", "e", "e", "h"], ["h", "v", "e", "e", "e", "h", "e", "h"], ["h", "e", "e", "h", "e", "e", "e", "h"], ["c", "v", "d", "v", "v", "v", "v", "c"], {tuple([2, 7]): -1, tuple([0, 3]): 1, tuple([9, 2]): 2}]
 
-room3 = [vwall, ["h", "e", "e", "e", "e", "h", "e", "h"], ["h", "h", "e", "h", "e", "e", "e", "h"], ["h", "h", "e", "h", "v", "v", "e", "h"], ["h", "i", "e", "e", "h", "e", "e", "h"], ["h", "v", "v", "v", "h", "e", "v", "h"], ["h", "e", "e", "e", "h", "e", "e", "h"], ["h", "e", "v", "v", "v", "v", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["c", "v", "v", "d", "v", "v", "v", "c"], {tuple([9, 3]): -1}]
+room13 = [vwall, ["h", "e", "e", "e", "e", "h", "e", "h"], ["h", "h", "e", "h", "e", "e", "e", "h"], ["h", "h", "e", "h", "v", "v", "e", "h"], ["h", "i", "e", "e", "h", "e", "e", "h"], ["h", "v", "v", "v", "h", "e", "v", "h"], ["h", "e", "e", "e", "h", "e", "e", "h"], ["h", "e", "v", "v", "v", "v", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["c", "v", "v", "d", "v", "v", "v", "c"], {tuple([9, 3]): -1}]
 
-room4 = [vwall, ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "U", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], vwall, {tuple([9, 3]): -1}]
+room14 = [["c", "v", "d", "v", "v", "v", "v", "c"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["c", "v", "v", "U", "v", "v", "v", "c"], {tuple([0, 2]): -2}]
+
+room20 = [vwall, ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["c", "v", "v", "D", "v", "v", "v", "c"], {tuple([7, 0]): 1}]
 
 map = [["+", "-", " ", "-", " " "-", "+"], ["|", "3", " ", "2", " ", "4", "|"], ["+", "-", "+", " ", "+", "-", "+"], [" ", " ", "|", "1", "|", " ", " "], [" ", " ", "|", "0", "|", " ", " "], [" ", " ", " ", "-", " ", " ", " "]]
 
-floor1 = [room0, room1, room2, room3, room4]
-floor2 = []
+floor1 = [room10, room11, room12, room13, room14]
+floor2 = [room20]
 floor3 = []
 floor4 = []
 
@@ -45,7 +47,7 @@ playerStats = { # dict to store player stats
   "def": 0,
   "health": 100, # self-explanatory
   "money": 0,
-  "xp": 0, # as a level
+  "xp": 12, # as a level
   "xpProg": 0, # out of number determined by xp level
   "crit": 15, # chance as a %
   "miss": 10, # chance as a %
@@ -188,7 +190,7 @@ itemPools = [itemNames1, itemNames2, itemNames3, itemNames4]
 
 specialItems = ["golden three"]
 
-# stores which items the shop on each floor sells, 
+# stores which items the shop on each floor sells 
 shopPools = [[], [], [], []]
 
 enemies = {
@@ -231,18 +233,18 @@ enemies = {
     "def": 4,
     "crit": 10,
     "miss": 10,
-    "xpYield": 8,
+    "xpYield": 25,
     "moneyYield": 10,
     "initialText": "This is a math student that watched too much Naruto. Now he's mad and wants to fill you with his plus-shaped shurikens.\n",
     "encounterTexts": ["The ninja tries to clone himself, then remembers all he can add is cuts to your body.\n", "The ninja does some parkour. You aren't impressed.\n", "The ninja spins his shurikens, then cuts himself.\n"]
   },
   "angry student": {
-    "health" : 95,
+    "health" : 90,
     "atk": 9,
     "def": 6,
     "crit": 5,
     "miss": 20,
-    "xpYield": 8,
+    "xpYield": 13,
     "moneyYield": 9,
     "initialText": "This student cracked under pressure and is now killing anything that moves. Which means you.\n",
     "encounterTexts": ["The student punches a wall.\n", "The student starts screaming.\n", "The student tries deep breathing, but it does nothing.\n"]
@@ -253,7 +255,7 @@ enemies = {
     "def": 8,
     "crit": 5,
     "miss": 20,
-    "xpYield": 6,
+    "xpYield": 15,
     "moneyYield": 10,
     "initialText": "Remember those math problems where someone buys a massive number of apples? This is that someone, and he's not moving out of your way.\n",
     "encounterTexts": ["The muncher tries to get an apple, but only gets a core.\n", "The muncher places an order for more apples.\n", "The muncher raves on about apples. You tune him out.\n"]
@@ -264,7 +266,7 @@ enemies = {
     "def": 6,
     "crit": 5,
     "miss": 20,
-    "xpYield": 7,
+    "xpYield": 14,
     "moneyYield": 8,
     "initialText": "This little prankster likes to throw baseballs at the perfect angle to hit someone in the head. How does he do it? He got a little too into graphing parabolas.\n",
     "encounterTexts": ["The enthusiast throws a ball at a wall, then tries to find the equation of its arc.\n", "The enthusiast throws a ball at a muncher. It lands.\n", "The enthusiast answers an angry call.\n"]
@@ -275,7 +277,7 @@ enemies = {
     "def": 10,
     "crit": 15,
     "miss": 20,
-    "xpYield": 11,
+    "xpYield": 40,
     "moneyYield": 9,
     "initialText": "A theatre student that also happens to be into math got a little too into his role as a paladin. Now he has a god complex and fights anyone he sees.\n",
     "encounterTexts": ["The paladin hoists his axe onto his shoulder, and bounces it on his shoulder.\n", "The paladin lets out a hearty warcry.\n", "The paladin adjusts his helmet.\n"]
@@ -286,7 +288,7 @@ enemies = {
     "def": 8,
     "crit": 5,
     "miss": 20,
-    "xpYield": 9,
+    "xpYield": 19,
     "moneyYield": 11,
     "initialText": "This trig student got a little too into graphs, so he got clackers just so he could have something to model. Unfortunately, those clackers are also pretty lethal, and heading right for you.\n",
     "encounterTexts": ["The student lets his clackers swing as he visualizes a graph.\n", "The student slows down the clackers to rest his hand.\n", "The student's clackers slip out of his hand and into a wall, so he goes and grabs them.\n"]
@@ -297,7 +299,7 @@ enemies = {
     "def": 11,
     "crit": 5,
     "miss": 20,
-    "xpYield": 10,
+    "xpYield": 23,
     "moneyYield": 8,
     "initialText": "Someone got too tired of using their calculator for trig functions, so they made this robot to do it for them. They forgot to program the 3 laws of robotics, so it's also murderous.\n",
     "encounterTexts": ["The robot sees a mouse, then starts trying to kill it.\n", "The robot sees a triangle on a wall and immediately tries to solve it.\n", "The robot starts thinking of the best way to cut you into triangles.\n"]
@@ -308,62 +310,62 @@ enemies = {
     "def": 9,
     "crit": 5,
     "miss": 20,
-    "xpYield": 8,
+    "xpYield": 21,
     "moneyYield": 9,
     "initialText": "A bogey managed to get its hands on a textbook, learning so much from it that it has ascended to a new plane of consciousness. Not that it doesn't have a physical body that it's trying to attack you with.\n",
     "encounterTexts": ["The bogey seems to be reading another textbook in its mind.\n", "The bogey tries to make a textbook appear, but forgets it can't do that in the physical world.\n", "The bogey starts dancing, but nothing happens.\n"]
   },
   "multiplication mage": {
-    "health": 205,
+    "health": 250,
     "atk": 20,
     "def": 15,
     "crit": 10,
     "miss": 5,
-    "xpYield": 15,
+    "xpYield": 60,
     "moneyYield": 13,
     "initialText": "This student read a forbidden textbook and gained power over multiplication. Now he can multiply the number of stab wounds you have with his darts.\n",
     "encounterTexts": ["The mage reminisces about the time he gave someone 28 stab wounds.\n", "The mage tries to multiply himself, then realizes he has no idea how clones work.\n", "The mage restocks his dart supply.\n"]
   },
   "straight-curve samurai": {
-    "health": 187,
+    "health": 233,
     "atk": 25,
     "def": 16,
     "crit": 20,
     "miss": 20,
-    "xpYield": 17,
+    "xpYield": 22,
     "moneyYield": 15,
     "initialText": "When this student had to show off a visual example of derivatives in his calculus class, he decided to use a real katana. Everyone stopped laughing when he cut them all in half.\n",
     "encounterTexts": ["The samurai does some practice swings.\n", "The samurai yells out a one-liner like an anime protagonist.\n", "The samurai starts talking about waifus, but you immediately tune him out.\n"]
   },
   "l'hôpital boxer": {
-    "health": 190,
+    "health": 271,
     "atk": 28,
     "def": 14,
     "crit": 20,
     "miss": 20,
-    "xpYield": 19,
+    "xpYield": 27,
     "moneyYield": 17,
     "initialText": "This student is at the top of his calc class. He also happens to be a boxer that is planning on sending you to the hospital.\n",
     "encounterTexts": ["The boxer does some practice jabs.\n", "The boxer starts jumping around to psych himself up.\n", "The boxer punches a nearby wall.\n"]
   },
   "integrating pyromaniac": {
-    "health": 195,
+    "health": 314,
     "atk": 24,
     "def": 17,
     "crit": 20,
     "miss": 20,
-    "xpYield": 16,
+    "xpYield": 35,
     "moneyYield": 20,
     "initialText": "This student likes to \"integrate\" stuff by melting them together with fire. He isn't that good at actual integration, though.\n",
     "encounterTexts": ["The pyromaniac strikes his lighter a few times.\n", "The pyromaniac thinks about making molotovs, then remembers he doesn't have alcohol on him.\n", "The pyromaniac checks how many matches he has in his matchbox.\n"]
   },
   "division gunner": {
-    "health": 240,
+    "health": 1729,
     "atk": 29,
     "def": 20,
     "crit": 40,
     "miss": 25,
-    "xpYield": 20,
+    "xpYield": 100,
     "moneyYield": 18,
     "initialText": "Unlike the other bosses, the Division Gunner went for full efficiency in his fighting power. That's why he's aiming 2 custom-made rubber band launchers at you.\n",
     "encounterTexts": ["The gunner twirls his launchers.\n", "The gunner checks on his rubber bands.\n", "The gunner shoots a wall.\n"]
@@ -371,7 +373,7 @@ enemies = {
 }
 
 # when adding bosses, make sure you put the boss name last for easy grabbing
-enemyNames1 = ["bogey", "rotten apple", "dark cloud", "addition ninja"] # creativity juice needed
+enemyNames1 = ["bogey", "rotten apple", "dark cloud", "addition ninja"]
 
 enemyNames2 = ["angry student", "apple muncher", "quadratic enthusiast", "subtraction paladin"]
 
@@ -434,7 +436,6 @@ levelToHealthMax = [
   580,
   697,
   848,
-  999
 ]
 
 floorMath = [
@@ -555,10 +556,14 @@ statToName = {
   "def": "damage reduction"
 }
 
+for i in range(4):
+  random.shuffle(itemPools[i])
+  shopPools[i] = itemPools[i][:3]
+
 def save():
   db["save"] = copy.deepcopy(playerStats) # put current player info in db. we're using deepcopy to avoid lists/dictionaries within these being modified outside of this method
-  db["inv"] = copy.deepcopy(playerInv)
-  db["shop"] = shopPools.copy()
+  db["inv"] = playerInv.copy()
+  db["shop"] = copy.deepcopy(shopPools)
 
 def load():
   global playerStats
@@ -566,12 +571,15 @@ def load():
   global shopPools
   global playerRoom
   playerStats = copy.deepcopy(dict(db["save"])) # take saved player info from db
-  playerInv = copy.deepcopy(list(db["inv"]))
-  shopPools = list(db["shop"]).copy()
+  playerInv = list(db["inv"]).copy()
+  shopPools = copy.deepcopy(list(db["shop"]))
   playerRoom = master[playerStats["floor"]][playerStats["room"]]
 
 def delete():
   db.clear()
+  for i in range(4):
+    random.shuffle(itemPools[i])
+    shopPools[i] = itemPools[i][:3]
   db["save"] = { 
     "currentChar": "@", 
     "floor": 0, 
@@ -582,7 +590,7 @@ def delete():
     "def": 0,
     "health": 100,
     "money": 0,
-    "xp": 1,
+    "xp": 12,
     "xpProg": 0, 
     "crit": 15,
     "miss": 10,
@@ -598,7 +606,7 @@ def delete():
     ]
   }
   db["inv"] = []
-  db["shop"] = [[], [], [], []]
+  db["shop"] = copy.deepcopy(shopPools)
   load()
 
 def saveScreen():
@@ -654,11 +662,25 @@ def saveScreen():
         printRoom(playerRoom)
         return
       elif pointerI == 3:
-        print("Deleting save...")
-        delete()
-        print("Back to Math Temple!\n")
-        printRoom(playerRoom)
-        return
+        print("Are you sure? (y/n)")
+        try:
+          e = getkey()
+        except KeyboardInterrupt:
+          continue
+        if e.lower() == "y":
+          print("Deleting save...")
+          delete()
+          print("Back to Math Temple!\n")
+          printRoom(playerRoom)
+          return
+        else:
+          print("Going back...\n")
+          print(
+        f"{pointer[0]}Continue\n" +
+        f"{pointer[1]}Save game\n" +
+        f"{pointer[2]}Load save\n" +
+        f"{pointer[3]}Delete save\n" +
+        f"{pointer[4]}Quit\n")
       elif pointerI == 4:
         print("Goodbye!")
         run = False
@@ -669,11 +691,11 @@ def saveScreen():
       return
 
 def stats():
-  print(f"Level: {playerStats['xp']}")
+  print(f"Level: {playerStats['xp'] + 1}")
   if playerStats["xp"] <= len(xpLevelToProg):
-    print(f"XP: {playerStats['xpProg']}/{xpLevelToProg[playerStats['xp'] - 1]}")
-  print(f"HP: {playerStats['health']}/{levelToHealthMax[playerStats['xp'] - 1]}")
-  for i in range(math.ceil(playerStats["health"] / (levelToHealthMax[playerStats["xp"] - 1] / 10))):
+    print(f"XP: {playerStats['xpProg']}/{xpLevelToProg[playerStats['xp']]}")
+  print(f"HP: {playerStats['health']}/{levelToHealthMax[playerStats['xp']]}")
+  for i in range(math.ceil(playerStats["health"] / (levelToHealthMax[playerStats["xp"]] / 10))):
     print("█", end="")
   print()
   print(f"Money: ${playerStats['money']}")
@@ -714,11 +736,10 @@ def printMap():
           print(map[x][y], end="")
     print()
 
-encounterChance = int((playerStats["health"]/levelToHealthMax[playerStats["xp"]])*15)
-
 def move(direction):
   global playerRoom
   global playerInv
+  encounterChance = int((playerStats["health"]/levelToHealthMax[playerStats["xp"]])*7)
   posChar = playerRoom[playerStats["x"] + dirToCoord[direction + "x"]][playerStats["y"] + dirToCoord[direction + "y"]] # temp variable for the position of the character
   if posChar in {"v", "h"}: # if its a wall block them
     printRoom(playerRoom)
@@ -749,7 +770,7 @@ def move(direction):
           printRoom(playerRoom)
           return
         if e == keys.ENTER:
-          combat1(boss=True)
+          combat1(boss = True)
           if playerRoom[playerStats["x"]][playerStats["y"]] != "d":
             return
         else:
@@ -766,20 +787,23 @@ def move(direction):
       playerStats["floor"] += 1
       playerStats["room"] = 0
       playerRoom = master[playerStats["floor"]][playerStats["room"]]
+      playerStats["x"] -= dirToCoord[direction + "x"] # move them back so they aren't in the wall anymore
+      playerStats["y"] -= dirToCoord[direction + "y"]
       print("Autosaving...")
       save()
       print("Done!")
     elif playerRoom[playerStats["x"]][playerStats["y"]] == "D":
       playerStats["floor"] -= 1
-      playerStats["room"] = 0
+      playerStats["room"] = 4
       playerRoom = master[playerStats["floor"]][playerStats["room"]]
+      playerStats["x"] -= dirToCoord[direction + "x"] # move them back so they aren't in the wall anymore
+      playerStats["y"] -= dirToCoord[direction + "y"]
       print("Autosaving...")
       save()
       print("Done!")
-    if playerStats["health"] < levelToHealthMax[playerStats["xp"] - 1]:
-      playerStats["health"] = min(levelToHealthMax[playerStats["xp"] - 1], playerStats["health"] + 2)
+    if playerStats["health"] < levelToHealthMax[playerStats["xp"]]:
+      playerStats["health"] = min(levelToHealthMax[playerStats["xp"]], playerStats["health"] + 2)
 
-    global encounterChance
     if 1 <= encounter <= encounterChance and playerStats["room"] < 4:
       playerStats["currentChar"] = "!"
       printRoom(playerRoom)
@@ -791,25 +815,19 @@ def move(direction):
 
 runSuccess = False
 
-def combat1(boss = False):
-  global combatPI1
-  global enemy1
-  global currentEnemyHealth1
+def combat1(boss=False):
+  exitCombat = False
   death = False
   combatPI1 = 0
   if boss:
     enemyName1 = enemyPools[playerStats["floor"]][-1]
   else:
     enemyName1 = random.choice(enemyPools[playerStats["floor"]][:3])
-    while enemyName1 == enemyPools[playerStats["floor"]][-1]:
-      enemyName1 = random.choice(enemyPools[playerStats["floor"]])
-    while enemyName1 == enemyPools[playerStats["floor"]][-1]:
-      enemyName1 = random.choice(enemyPools[playerStats["floor"]])
   enemy1 = enemies[enemyName1]
   currentEnemyHealth1 = enemy1["health"]
   print(enemy1["initialText"]) # encounter text
   def combatPointer1Refresh():
-    global combatPI1
+    nonlocal combatPI1
     spaces = " "*(6 - len(str(playerStats["health"])))
     print(f"HP: {playerStats['health']}/{levelToHealthMax[playerStats['xp']]}{spaces + enemyName1.title()} HP: {currentEnemyHealth1}/{enemy1['health']}") # label player and enemy health
     for i in range(10): # print player health bar
@@ -830,29 +848,31 @@ def combat1(boss = False):
     print("ATK INV RUN")
     combatPointer1 = [" ", " "]
     combatPointer1.insert(combatPI1, "^")
-    print(" " + "   ".join(combatPointer1) + "\n")
+    print(" " + "   ".join(combatPointer1))
     
     if playerStats["atk"] > 0:
       print(f"Extra damage: {playerStats['atk']}")
     if playerStats["def"] > 0:
       print(f"Damage reduction: {playerStats['def']}")
     print()
+
   combatPointer1Refresh() # initial menu
   
   def atk1(enemy):
-    global currentEnemyHealth1
-    a = math.floor(3**(1 + 0.1*playerStats["xp"]))
-    b = math.ceil(5**(1 + 0.1*playerStats["xp"]))
+    nonlocal currentEnemyHealth1
+    nonlocal exitCombat
+    unvariedAtk = math.floor(4**(1 + 0.2*playerStats["xp"])) # base atk
+    atkVariation = int((50**(1/17))**playerStats["xp"]) # variation in atk; at lvl 1 it's +-1 and at lvl 18 (max) it's +- 50
     miss = random.randint(1, 100)
     crit = random.randint(1, 100)
     if miss <= playerStats["miss"]:
       playerAtkInt1 = 0
       print("You missed!")
     elif crit <= playerStats["crit"]:
-      playerAtkInt1 = int(1.5 * (random.randint(a, b) / (enemy["def"] // 2)) + playerStats["atk"])
+      playerAtkInt1 = int(1.5 * (random.randint(unvariedAtk - atkVariation, unvariedAtk + atkVariation) / (enemy["def"] // 2)) + playerStats["atk"])
       print(f"Critical hit! You dealt {playerAtkInt1} damage to the {enemyName1.title()}!")
     else:
-      playerAtkInt1 = int(random.randint(a, b) / (enemy["def"] // 2) + playerStats["atk"])
+      playerAtkInt1 = int(random.randint(unvariedAtk - atkVariation, unvariedAtk + atkVariation) / (enemy["def"] // 2) + playerStats["atk"])
       print(f"You dealt {playerAtkInt1} damage to the {enemyName1.title()}!")
     currentEnemyHealth1 -= playerAtkInt1
     removeQueue = []
@@ -864,10 +884,14 @@ def combat1(boss = False):
         removeQueue.append(buff)
     for i in removeQueue:
       del playerStats["buffs"]["atk"][i]
-
+    if currentEnemyHealth1 <= 0:
+      enemyDeath1()
+      exitCombat = True
+      return
+  
   def enemyAtk1():
     print() # line break for clarity
-    global enemy1
+    nonlocal enemy1
     nonlocal death
     miss = random.randint(1, 100)
     crit = random.randint(1, 100)
@@ -882,7 +906,7 @@ def combat1(boss = False):
       playerStats["health"] -= enemyAtkInt1
       print(f"{enemyName1.title()} deals {enemyAtkInt1} damage.")
     if playerStats["health"] <= 0:
-      print("You died! Loading last save...")
+      print("You died! Loading last save...\n")
       load()
       death = True
     removeQueue = []
@@ -893,24 +917,27 @@ def combat1(boss = False):
         print(f"You lost a buff: -{playerStats['buffs']['def'][buff]['change']} damage reduction.")
         removeQueue.append(buff)
     for i in removeQueue:
-      del playerStats["buffs"]["def"][i] # you can keep i here k, it works right?
+      del playerStats["buffs"]["def"][i]
 
   def enemyDeath1():
+    nonlocal exitCombat
+    exitCombat = True
     print(f"You killed the {enemyName1}.")
-    xpGain1 = random.randint(enemy1["xpYield"] - 1, enemy1["xpYield"] + 1)
+    xpGainVariation = int((3**(1/3))**playerStats["room"]) # variation in xp drop
+    xpGain1 = random.randint(enemy1["xpYield"] - xpGainVariation, enemy1["xpYield"] + xpGainVariation)
     moneyGain1 = random.randint(enemy1["moneyYield"] - 1, enemy1["moneyYield"] + 1)
     playerStats["xpProg"] += xpGain1
     playerStats["money"] += moneyGain1
-    if len(xpLevelToProg) == playerStats["xp"]:
+    if len(xpLevelToProg) == playerStats["xp"] + 1:
       print("You're at max level!")
     else: 
-      if playerStats["xpProg"] >= xpLevelToProg[playerStats["xp"] - 1]:
+      if playerStats["xpProg"] >= xpLevelToProg[playerStats["xp"]]:
         print("You levelled up!")
-        playerStats["xp"] += 1
         if len(xpLevelToProg) >= playerStats["xp"]:
-          playerStats["xpProg"] %= xpLevelToProg[playerStats["xp"] - 1]
+          playerStats["xpProg"] %= xpLevelToProg[playerStats["xp"]]
+        playerStats["xp"] += 1
       else:  
-        print(f"You gained {xpGain1} XP and ${moneyGain1}! (Level {playerStats['xp']}; {playerStats['xpProg']}/{xpLevelToProg[playerStats['xp'] - 1]} to next level)\n")
+        print(f"You gained {xpGain1} XP and ${moneyGain1}! (Level {playerStats['xp'] + 1}; {playerStats['xpProg']}/{xpLevelToProg[playerStats['xp']]} to next level)\n")
     if enemy1 == enemyPools[playerStats["floor"]][-1]:
       print(f"{enemy1} dropped a study note! It says:")
       print(items[studyNotes[playerStats["floor"]] + "c"])
@@ -918,9 +945,6 @@ def combat1(boss = False):
 
   global runSuccess
   while True:
-    if currentEnemyHealth1 <= 0:
-      enemyDeath1()
-      return
     try:
       e = getkey()
     except KeyboardInterrupt:
@@ -934,8 +958,12 @@ def combat1(boss = False):
     elif e == keys.ENTER:
       if combatPI1 == 0:
         atk1(enemy1)
+        if exitCombat == True: # check for enemy death here
+          exitCombat = False
+          return
         enemyAtk1()
         if death:
+          printRoom(playerRoom)
           return
         print(random.choice(enemy1["encounterTexts"]))
         combatPointer1Refresh()
@@ -1025,28 +1053,17 @@ def run(floor):
     return
     
 # also add healthbar and inv in both this and standard menu when moving around
-  
-# random gen "seed"
-itemList1 = list()
-random.shuffle(itemNames1)
-for i in range(3): # for floor 1 shop items
-  randomItem1 = itemNames1[i]
-  itemList1.append(randomItem1)
 
 itemState1 = [0, 0, 0] # so it doesn't get redefined in the shop1() function every time
 
 def shop1():
   print("Welcome to the shop! Use arrow keys and enter to select your items below. Press esc to exit.\n")
-  global shopPI1
   global itemState1  
-  random.shuffle(itemPools[playerStats["floor"]])
   itemList1 = shopPools[playerStats["floor"]]
-  if len(itemList1) == 0:
-    itemList1 = itemPools[playerStats["floor"]][:3]
   shopPI1 = 0
   itemChar1 = ["# ", "x "]
   def shopPointer1Refresh():
-    global shopPI1
+    nonlocal shopPI1
     itemPointer1 = [" ", " "]
     itemPointer1.insert(shopPI1, "^")
     itemDisplay1 = ""
