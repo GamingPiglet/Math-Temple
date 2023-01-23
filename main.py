@@ -3,10 +3,11 @@ import random, math, copy # import some builtin modules for operations
 from replit import db # import replit module so we can use db for saving
 from getkey import getkey, keys # import getkey package so we can use keypresses, keys is for handling keys like enter or tab
 
-run = True # keep game running
+run = True # keep game running 
 
 vwall = ["c", "v", "v", "v", "v", "v", "v", "c"] # vertical wall
 
+# lists for storing room layouts. the final dictionary at the end with tuples as keys store door information
 room10 = [vwall, ["h", "s", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], vwall, {tuple([5, 0]): 1}]
 
 room11 = [vwall, ["h", "e", "h", "e", "e", "e", "e", "h"], ["d", "e", "h", "e", "e", "e", "e", "h"], ["h", "e", "h", "e", "e", "h", "e", "h"], ["h", "e", "h", "e", "e", "h", "e", "h"], ["h", "e", "h", "e", "e", "h", "e", "d"], ["h", "e", "h", "e", "e", "h", "e", "h"], ["h", "e", "e", "e", "e", "h", "e", "h"], ["h", "e", "e", "e", "e", "h", "e", "h"], vwall, {tuple([5, 7]): -1, tuple([2, 0]): 1}]
@@ -17,20 +18,62 @@ room13 = [vwall, ["h", "e", "e", "e", "e", "h", "e", "h"], ["h", "h", "e", "h", 
 
 room14 = [["c", "v", "d", "v", "v", "v", "v", "c"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["c", "v", "v", "U", "v", "v", "v", "c"], {tuple([0, 2]): -2}]
 
-room20 = [vwall, ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["c", "v", "v", "D", "v", "v", "v", "c"], {tuple([7, 0]): 1}]
+room20 = [["e", "e", "e", "e", "e", "e", "e", "e"], vwall, ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "s", "h", "e", "v", "e", "h"], ["h", "e", "v", "h", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "h", "v", "v", "e", "e", "h"], ["d", "e", "h", "e", "e", "e", "e", "h"], ["h", "e", "h", "e", "e", "e", "e", "h"], ["c", "v", "v", "D", "v", "v", "v", "c"], {tuple([7, 0]): 1}]
 
-map = [["+", "-", " ", "-", " " "-", "+"], ["|", "3", " ", "2", " ", "4", "|"], ["+", "-", "+", " ", "+", "-", "+"], [" ", " ", "|", "1", "|", " ", " "], [" ", " ", "|", "0", "|", " ", " "], [" ", " ", " ", "-", " ", " ", " "]]
+room21 = [vwall, ["h", "e", "e", "e", "e", "v", "v", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "v", "h", "e", "e", "e", "h"], ["d", "e", "h", "v", "e", "e", "h", "h"], ["h", "e", "e", "e", "e", "e", "h", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "h", "v", "e", "e", "d"], ["h", "e", "e", "v", "h", "e", "e", "h"], vwall, {tuple([7, 7]): -1, tuple([3, 0]): 1, tuple([4, 0]): 1, tuple([6, 0]): 1}]
 
+room22 = [["c", "v", "v", "v", "v", "v", "d", "c"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "v", "v", "v", "v", "v", "h"], ["h", "e", "e", "h", "e", "e", "e", "d"], ["h", "v", "e", "h", "e", "e", "e", "d"], ["h", "e", "e", "e", "e", "h", "v", "v"], ["h", "e", "e", "e", "e", "h", "e", "d"], ["h", "e", "v", "v", "e", "h", "v", "v"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["c", "v", "v", "v", "v", "d", "v", "c"], {tuple([3, 7]): -1, tuple([4, 7]): -1, tuple([6, 7]): -1, tuple([0, 6]): 1, tuple([9, 5]): 2}]
+
+room23 = [["c", "v", "v", "v", "v", "v", "v", "v", "c"], ["h", "e", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "h", "v", "v", "v", "h", "e", "h"], ["h", "e", "h", "e", "e", "e", "h", "e", "h"], ["h", "e", "h", "e", "h", "e", "h", "e", "h"], ["h", "e", "h", "e", "h", "e", "h", "e", "h"], ["h", "e", "h", "i", "h", "e", "h", "e", "h"], ["h", "e", "h", "v", "e", "e", "h", "e", "h"], ["h", "e", "e", "e", "e", "h", "e", "e", "h"], ["c", "v", "v", "v", "v", "v", "d", "v", "c"], {tuple([9, 6]): -1}]
+
+room24 = [["c", "v", "v", "v", "v", "d", "v", "c"], ["U", "e", "h", "e", "e", "e", "e", "h"], ["h", "e", "h", "e", "e", "e", "e", "h"], ["h", "e", "h", "e", "e", "e", "e", "h"], ["h", "e", "h", "e", "e", "e", "e", "h"], ["h", "e", "h", "e", "e", "e", "e", "h"], ["h", "e", "h", "v", "v", "h", "e", "h"], ["h", "e", "e", "e", "e", "h", "e", "h"], ["h", "e", "e", "h", "e", "e", "e", "h"], vwall, {tuple([0, 5]): -2}]
+
+room30 = [["v", "v", "v", "v", "v", "v", "v", "c"], ["D", "e", "e", "e", "e", "e", "e", "h"], ["v", "v", "v", "v", "v", "v", "e", "h"], ["d", "e", "e", "e", "h", "e", "e", "h"], ["v", "v", "h", "e", "h", "e", "e", "h"], ["d", "e", "h", "e", "h", "e", "e", "h"], ["v", "e", "h", "e", "h", "e", "e", "h"], ["d", "e", "h", "e", "h", "e", "v", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], vwall, {tuple([1, 0]): 1, tuple([3, 0]): 1, tuple([5, 0]): 1, tuple([7, 0]): 1}]
+
+room31 = [["v", "v", "v", "v", "v", "v", "v", "c"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["v", "v", "v", "v", "v", "h", "e", "h"], ["d", "e", "e", "e", "e", "h", "e", "d"], ["v", "e", "v", "v", "e", "h", "v", "v"], ["d", "e", "e", "e", "e", "e", "e", "d"], ["v", "v", "v", "v", "v", "v", "v", "v"], ["h", "h", "e", "e", "e", "e", "e", "d"], ["h", "h", "e", "e", "h", "e", "e", "h"], ["c", "v", "v", "d", "v", "d", "v", "c"], {tuple([3, 7]): -1, tuple([5, 7]): -1, tuple([7, 7]): -1, tuple([1, 0]): 1, tuple([3, 0]): 1, tuple([5, 0]): 1, tuple([9, 3]): 4, tuple([9, 5]): 4}]
+
+room32 = [["c", "v", "v", "v", "d", "v", "v", "v"], ["h", "e", "e", "e", "e", "h", "e", "d"], ["h", "v", "e", "h", "e", "h", "v", "v"], ["h", "e", "e", "h", "e", "e", "e", "d"], ["h", "e", "v", "v", "v", "h", "e", "v"], ["h", "e", "e", "e", "e", "h", "e", "d"], ["h", "e", "e", "h", "e", "e", "e", "h"], ["h", "e", "v", "v", "v", "v", "v", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["c", "v", "v", "v", "v", "d", "v", "c"], {tuple([0, 4]): 1, tuple([1, 7]): -1, tuple([3, 7]): -1, tuple([5, 7]): -1, tuple([9, 5]): 2}]
+
+room33 = [["c", "v", "v", "v", "v", "v", "c"], ["h", "h", "e", "h", "e", "h", "h"], ["h", "e", "s", "e", "h", "e", "h"], ["h", "h", "e", "h", "e", "h", "h"], ["h", "e", "e", "e", "e", "e", "h"], ["h", "h", "e", "h", "e", "h", "h"], ["h", "e", "h", "e", "e", "e", "h"], ["h", "h", "e", "h", "e", "h", "h"], ["h", "e", "e", "e", "e", "e", "h"], ["c", "v", "v", "v", "d", "v", "c"], {tuple([9, 4]): -1}]
+
+room34 = [["c", "v", "v", "v", "v", "d", "v", "c"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "h", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "h", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "h", "e", "e", "e", "e", "h"], ["h", "e", "U", "v", "e", "v", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], vwall, {tuple([0, 5]): -2}]
+
+room35 = [["c", "v", "v", "d", "v", "d", "v", "c"], ["h", "e", "e", "e", "h", "e", "e", "h"], ["h", "e", "v", "v", "v", "v", "e", "h"], ["h", "e", "h", "h", "h", "h", "e", "h"], ["h", "e", "h", "h", "h", "h", "e", "h"], ["h", "e", "h", "h", "h", "h", "e", "h"], ["h", "e", "h", "h", "h", "h", "e", "h"], ["h", "e", "v", "v", "v", "v", "e", "h"], ["h", "e", "e", "i", "e", "e", "e", "h"], vwall, {tuple([0, 3]): -4, tuple([0, 5]): -4}]
+
+room40 = [vwall, ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "v", "v", "e", "v", "h", "e", "h"], ["h", "e", "e", "e", "e", "h", "e", "h"], ["h", "v", "e", "v", "v", "h", "e", "d"], ["h", "e", "e", "e", "e", "h", "v", "h"], ["h", "v", "v", "h", "e", "e", "e", "h"], ["h", "e", "D", "h", "v", "v", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], vwall, {tuple([4, 7]): 1}]
+
+room41 = [["c", "v", "d", "v", "d", "v", "d", "v", "d", "v", "d", "c"], ["h", "v", "e", "v", "e", "e", "e", "v", "i", "v", "e", "h"], ["h", "e", "h", "e", "h", "e", "h", "e", "h", "e", "h", "h"], ["h", "e", "e", "v", "e", "e", "e", "e", "e", "v", "e", "h"], ["d", "e", "h", "e", "h", "e", "h", "e", "h", "e", "h", "h"], ["h", "e", "e", "e", "e", "v", "e", "e", "e", "e", "e", "d"], ["h", "e", "h", "e", "h", "e", "h", "e", "h", "e", "h", "h"], ["h", "v", "e", "e", "e", "e", "e", "e", "e", "e", "e", "d"], ["h", "e", "h", "e", "h", "e", "h", "e", "h", "e", "h", "h"], ["c", "v", "v", "v", "v", "v", "v", "v", "v", "v", "v", "c"], {tuple([4, 0]): -1, tuple([0, 2]): 4, tuple([0, 4]): 4, tuple([0, 6]): 4, tuple([0, 8]): 4, tuple([0, 10]): 4, tuple([5, 11]): 1, tuple([7, 11]): 1}]
+
+room42 = [["c", "v", "v", "v", "v", "v", "v", "v", "v", "c"], ["h", "e", "e", "e", "e", "e", "e", "e", "e", "d"], ["h", "e", "e", "h", "e", "e", "e", "h", "e", "d"], ["h", "e", "h", "h", "h", "e", "h", "h", "h", "d"], ["h", "e", "e", "h", "e", "e", "e", "h", "e", "d"], ["d", "e", "e", "e", "e", "e", "e", "e", "e", "d"], ["v", "v", "v", "v", "v", "v", "h", "e", "e", "d"], ["d", "e", "h", "e", "e", "e", "h", "v", "v", "h"], ["h", "e", "e", "e", "h", "e", "e", "e", "h", "h"], ["c", "v", "v", "v", "v", "v", "v", "d", "v", "c"], {tuple([5, 0]): -1, tuple([7, 0]): -1, tuple([1, 9]): 2, tuple([2, 9]): 2, tuple([3, 9]): 2, tuple([4, 9]): 2, tuple([5, 9]): 2, tuple([6, 9]): 2, tuple([9, 7]): 1}]
+
+room43 = [["c", "v", "v", "v", "v", "v", "v", "d", "v", "c"], ["h", "s", "h", "e", "e", "e", "h", "e", "e", "h"], ["h", "e", "h", "e", "h", "e", "h", "h", "e", "h"], ["h", "e", "e", "e", "h", "e", "e", "e", "e", "h"], ["c", "v", "v", "v", "v", "v", "v", "v", "v", "c"], {tuple([0, 7]): -1}]
+
+room44 = [["v", "v", "v", "v", "v", "v", "v", "c"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], vwall, {tuple([1, 0]): -2, tuple([2, 0]): -2, tuple([3, 0]): -2, tuple([4, 0]): -2, tuple([5, 0]): -2, tuple([6, 0]): -2}]
+
+room45 = [["c", "v", "v", "v", "v", "v", "v", "v", "v", "v", "v", "c"], ["h", "h", "e", "e", "e", "e", "e", "e", "e", "e", "e", "h"], ["h", "h", "e", "h", "e", "h", "e", "h", "e", "h", "e", "h"], ["h", "h", "e", "h", "e", "h", "e", "h", "e", "h", "e", "h"], ["h", "h", "e", "h", "e", "h", "e", "h", "e", "h", "e", "h"], ["h", "h", "e", "h", "e", "h", "e", "h", "e", "h", "e", "h"], ["h", "h", "e", "h", "e", "h", "e", "h", "e", "h", "e", "h"], ["h", "h", "e", "h", "e", "h", "e", "h", "e", "h", "e", "h"], ["h", "h", "e", "h", "e", "h", "e", "h", "e", "h", "e", "h"], ["h", "h", "e", "h", "e", "h", "e", "h", "e", "h", "e", "h"], ["h", "h", "e", "h", "e", "h", "e", "h", "e", "h", "e", "h"], ["h", "h", "d", "h", "d", "h", "d", "h", "d", "h", "d", "h"], {tuple([11, 2]): -4, tuple([11, 4]): -4, tuple([11, 6]): -4, tuple([11, 8]): -4, tuple([11, 10]): -4}]
+
+# putting the rooms into lists for indexing
 floor1 = [room10, room11, room12, room13, room14]
-floor2 = [room20]
-floor3 = []
-floor4 = []
+floor2 = [room20, room21, room22, room23, room24]
+floor3 = [room30, room31, room32, room33, room34, room35]
+floor4 = [room40, room41, room42, room43, room44, room45]
 
+# stores the entire temple in one list
 master = [floor1, floor2, floor3, floor4]
+
+# map layouts for each floor. the number corresponds to a room and is used to index a value later on to see if that room has been visited before
+map1 = [["+", "-", " ", "-", " " "-", "+"], ["|", "3", " ", "2", " ", "4", "|"], ["+", "-", "+", " ", "+", "-", "+"], [" ", " ", "|", "1", "|", " ", " "], [" ", " ", "|", "0", "|", " ", " "], [" ", " ", " ", "-", " ", " ", " "]]
+
+map2 = [["+", "-", " ", "-", " ", "-", "+"], ["|", "3", " ", "2", " ", "4", "|"], ["+", "-", "+", " ", "+", "-", "+"], [" ", " ", "|", "1", " ", "5", "|"], [" ", " ", "|", "0", "+", "-"], [" ", " ", " ", "-"]]
+
+map3 = [[" ", " ", "+", "-", "+"], ["+","-","+", "0", "|"], ["|", "5", " ", "1", "+", "-", "+"], ["+", "-", "+", "2", " ", "3", "|"], [" ", " ", "|", "4", "+", "-", "+"], [" ", " ", " ", "-"]]
+
+# stores the layouts in 1 convenient list for indexing later
+maps = [map1, map1, map2, map3]
 
 deco = [",", ".", "'", '"', "`"] # decoration list to be picked from
 
-for floor in master: # dw this is O(1)
+for floor in master: # randomizes decoration throughout each room
   for room in floor:
     for column in room:
       for letter in column:
@@ -40,14 +83,14 @@ for floor in master: # dw this is O(1)
 playerStats = { # dict to store player stats
   "currentChar": "@", # player char changes to ! once combat begins, so we store the player's current character so we can just index a value once we have to print the player
   "floor": 0, # player position values, x and y are based on 0, 0 in the room being the top left corner
-  "room": 0,
+  "room": 0, # stores which room player is in
   "x": 4,
   "y": 6,
   "atk": 0, # unlike enemies, player atk and def are flat damage increases and decreases respectively
   "def": 0,
   "health": 100, # self-explanatory
   "money": 0,
-  "xp": 12, # as a level
+  "xp": 0, # as a level
   "xpProg": 0, # out of number determined by xp level
   "crit": 15, # chance as a %
   "miss": 10, # chance as a %
@@ -58,8 +101,8 @@ playerStats = { # dict to store player stats
   "mapStates": [ # stores which rooms the player has visited on the floor. the first room of any floor will always be visited, so it's true by default
     [True, False, False, False, False],
     [True, False, False, False, False],
-    [True, False, False, False, False],
-    [True, False, False, False, False]
+    [True, False, False, False, False, False],
+    [True, False, False, False, False, False]
   ]
 }
 
@@ -90,13 +133,13 @@ items = { # dictionary of items that shops sell. keys that are just item names a
   "dusty textbooks": "def",
   "dusty textbookt": 3,
   "dusty textbookb": 4,
-  "golden three": "The Golden Three! Increases your attack by a whopping 33 for 2 turns.",
+  "golden three": "The Golden Three! Increases your attack by a whopping 33 for 3 turns through the power of sheer confidence.", # floor 1 special item
   "golden threec": (4, 1),
   "golden threes": "atk",
-  "golden threet": 2,
+  "golden threet": 3,
   "golden threeb": 33,
   "study note 1": "Dropped by the addition ninja. Seems to be grade 9 material.",
-  "study note 1c": "put note here",
+  "study note 1c": "In any linear equation in y-intercept form y = mx + b, m gives the slope of the line and b gives the y-intercept. The slope affects how steep the line appears and the y-intercept not only is equal to y in the point (0, y) but also represents how high or low the line is (its vertical shift). Parallel lines have the same slope m and perpendicular lines have slopes that are negative reciprocals of each other (e.g. a perpendicular line to y = 2x + 3 would be y = -x/2).",
   "study note 1s": "unusable",
   "apple core": "A rotten apple core. Smells rancid. Decreases damage by 6 for 1 turn.",
   "apple corec": 7,
@@ -120,8 +163,12 @@ items = { # dictionary of items that shops sell. keys that are just item names a
   "breakfast burgerc": 12,
   "breakfast burgers": "health",
   "breakfast burgerb": 27,
+  "book of life": "The book doesn't actually say anything. You can however feel a powerful pulse emanating from it. Heals a gratifying 75 HP.", # floor 2 special item
+  "book of lifec": (6, 3),
+  "book of lifes": "health",
+  "book of lifeb": 75,
   "study note 2": "Dropped by the subtraction paladin. Seems to be grade 10 material.",
-  "study note 2c": "put note here",
+  "study note 2c": "The quadratic formula gives up to 2 values of x for the roots of any quadratic in standard form ax^2 + bx + c. The formula is x = (-b +- sqrt(b^2 - 4ac))/2a. In the formula, the b^2 - 4ac under the square root is known as the determinant and allows us to deduce the number of roots of the quadratic. If it is positive, there are two roots; if it is zero, there is one root; if it is negative, there are no real roots/there are two complex roots.",
   "study note 2s": "unusable",
   "bubble tea": "Very popular among students. Heals 20 HP.",
   "bubble teac": 14,
@@ -145,8 +192,13 @@ items = { # dictionary of items that shops sell. keys that are just item names a
   "whole pizzac": 17,
   "whole pizzas": "health",
   "whole pizzab": 27,
+  "platinum four": "The Platinum Four! Increases your defense by 44 (effectively making you invincible!) for 4 turns by sheer courage.",
+  "platinum fourc": (8, 3),
+  "platinum fours": "def",
+  "platinum fourt": 4,
+  "platinum fourb": 44,
   "study note 3": "Dropped by the multiplication mage. Seems to be grade 11 material.",
-  "study note 3c": "put note here",
+  "study note 3c": "The special angles are 30, 45, and 60 degrees. sin(30 deg) = 1/2, sin(45 deg) = sqrt(2)/2, sin(60 deg) = sqrt(3)/2; similarly cos(30 deg) = sqrt(3)/2, cos(45 deg) = sqrt(2)/2, cos(60 deg) = 1/2. For the future, 180 degrees = pi radians.",
   "study note 3s": "unusable",
   "scissors": "Longer blade, deeper cuts. Deals 10 more damage for 6 attacks.",
   "scissorsc": 20,
@@ -170,8 +222,13 @@ items = { # dictionary of items that shops sell. keys that are just item names a
   "lunch wrapc": 17,
   "lunch wraps": "health",
   "lunch wrapb": 20,
+  "division by zero": "A single, small piece of paper. On it is \"0/0\" written in black ink. You're not too sure what this will do.",
+  "division by zeroc": (1, 8),
+  "division by zeros": random.choice(["atk", "def", "health"]),
+  "division by zerot": random.randint(1, 3),
+  "division by zerob": random.randint(200, 300),
   "study note 4": "Dropped by the division gunner. Seems to be grade 12 material.",
-  "study note 4c": "put note here",
+  "study note 4c": "The integral of sec(x)dx is ln|sec(x) + tan(x)| + C. Thanks for playing!",
   "study note 4s": "unusable"
 }
 
@@ -184,15 +241,21 @@ itemNames3 = ["bubble tea", "compass", "notebook", "french fries", "whole pizza"
 
 itemNames4 = ["scissors", "backpack", "brown sugar boba", "chicken burger combo", "lunch wrap"]
 
+# stores study note names by floor so the program can find which one to drop by indexing with player's current floor
 studyNotes = ["study note 1", "study note 2", "study note 3", "study note 4"]
 
 itemPools = [itemNames1, itemNames2, itemNames3, itemNames4]
 
-specialItems = ["golden three"]
+# stores special items, ordered this way for same reason as study notes
+specialItems = ["golden three", "book of life", "platinum four", "division by zero"]
 
 # stores which items the shop on each floor sells 
 shopPools = [[], [], [], []]
 
+# will be used to store which items in each shop has been bought. stores numbers to make printing out items easier later
+itemStates = [[], [], [], []]
+
+# dictionary storing enemies. stats are self-explanatory, initialtext is for the message indicating what enemy you're fighting, and encountertexts is for messages that appear throughout the fight
 enemies = {
   "bogey": {
     "health": 58,
@@ -372,7 +435,7 @@ enemies = {
   }
 }
 
-# when adding bosses, make sure you put the boss name last for easy grabbing
+# lists for storing enemy names, and another list for ordering them by floor to easily grab the right list. we store bosses as the last element in these lists so we can hard code an index when getting them
 enemyNames1 = ["bogey", "rotten apple", "dark cloud", "addition ninja"]
 
 enemyNames2 = ["angry student", "apple muncher", "quadratic enthusiast", "subtraction paladin"]
@@ -383,6 +446,10 @@ enemyNames4 = ["deriving samurai", "l'hôpital boxer", "integrating pyromaniac",
 
 enemyPools = [enemyNames1, enemyNames2, enemyNames3, enemyNames4]
 
+# variable used to check if player should escape enemy when running
+runSuccess = False
+
+# translate internally stored characters to proper ascii art with this dictionary
 tileSymbol = {
   "c": "+",
   "v": "|",
@@ -392,10 +459,11 @@ tileSymbol = {
   "d": "*",
   "s": "$",
   "i": "?",
-  "U": "s",
-  "D": "s"
+  "U": "^",
+  "D": "^"
 }
 
+# stores the xp required to get to each level from 1 onwards
 xpLevelToProg = [
   15,
   25,
@@ -417,6 +485,7 @@ xpLevelToProg = [
   314
 ]
 
+# stores the max hp you can have at each level
 levelToHealthMax = [
   100,
   104,
@@ -438,6 +507,7 @@ levelToHealthMax = [
   848,
 ]
 
+# the problems that you have to answer whenever you choose to run from an enemy. if you answer correctly, you get away
 floorMath = [
   { # floor 1 questions (gr 9 math)
     "What is the slope of equation y = 2x + 3?": 2,
@@ -529,6 +599,7 @@ floorMath = [
   }
 ]
 
+# stores how every movement direction changes the coordinates of the player
 dirToCoord = {
   "up": "y",
   "upx": 0,
@@ -544,28 +615,22 @@ dirToCoord = {
   "righty": 0,
 }
 
-dirToRoom = {
-  "up": [6, "y"],
-  "down": [1, "y"],
-  "left": [8, "x"],
-  "right": [1, "x"]
-}
-
+# translates internally stored buff stats to messages
 statToName = {
   "atk": "extra damage",
   "def": "damage reduction"
 }
 
-for i in range(4):
-  random.shuffle(itemPools[i])
-  shopPools[i] = itemPools[i][:3]
-
+# put current player info in db. we're using copy.deepcopy() for playerstats and shoppools because those have lists/dictionaries inside them. if we just use .copy() the copies will contain the original lists/dictionaries instead of copies, meaning the saved versions can be modified outside of this method
 def save():
-  db["save"] = copy.deepcopy(playerStats) # put current player info in db. we're using deepcopy to avoid lists/dictionaries within these being modified outside of this method
+  db["save"] = copy.deepcopy(playerStats) 
   db["inv"] = playerInv.copy()
   db["shop"] = copy.deepcopy(shopPools)
+  db["itemStates"] = copy.deepcopy(itemStates)
 
+# loads values saved in the db. deepcopy is being used for reason listed for save
 def load():
+  # global declaration so we can modify the actual variables
   global playerStats
   global playerInv
   global shopPools
@@ -573,10 +638,12 @@ def load():
   playerStats = copy.deepcopy(dict(db["save"])) # take saved player info from db
   playerInv = list(db["inv"]).copy()
   shopPools = copy.deepcopy(list(db["shop"]))
+  itemStates = copy.deepcopy(list(db["itemStates"]))
   playerRoom = master[playerStats["floor"]][playerStats["room"]]
 
+# reassign the values within the db to what the values would be on first run
 def delete():
-  db.clear()
+  # reshuffles shop items before saving in db
   for i in range(4):
     random.shuffle(itemPools[i])
     shopPools[i] = itemPools[i][:3]
@@ -590,7 +657,7 @@ def delete():
     "def": 0,
     "health": 100,
     "money": 0,
-    "xp": 12,
+    "xp": 0,
     "xpProg": 0, 
     "crit": 15,
     "miss": 10,
@@ -601,76 +668,107 @@ def delete():
     "mapStates": [
       [True, False, False, False, False],
       [True, False, False, False, False],
-      [True, False, False, False, False],
-      [True, False, False, False, False]
+      [True, False, False, False, False, False],
+      [True, False, False, False, False, False]
     ]
   }
   db["inv"] = []
   db["shop"] = copy.deepcopy(shopPools)
+  db["itemStates"] = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
+  # load save file once reinitialized
   load()
+  gameInfo() # print gameinfo on new save
 
+# creates a pause menu with options for save file
 def saveScreen():
+  # declare global so the function can modify these variables
   global run
   global playerRoom
+  # stores all possible pointer positions. when the pointer is moved it's current position is set to whitespace while the new position is set to the pointer
   pointer = ["> ", "  ", "  ", "  ", "  "]
   pointerI = 0
+  # prints out menu
   print("What would you like to do?\n" +
         f"{pointer[0]}Continue\n" +
         f"{pointer[1]}Save game\n" +
         f"{pointer[2]}Load save\n" +
         f"{pointer[3]}Delete save\n" +
         f"{pointer[4]}Quit\n")
+  # while loop for getting keypresses
   while True:
+    # pressing ctrl c throws a keyboard interrupt error, so we gotta do this try catch every time we get a key
     try:
       e = getkey()
     except KeyboardInterrupt:
-      continue
-    if e == keys.UP:
-      pointer[pointerI] = "  "
-      pointerI = (pointerI - 1) % 5
-      pointer[pointerI] = "> "
-      print(f"{pointer[0]}Continue\n" +
-        f"{pointer[1]}Save game\n" +
-        f"{pointer[2]}Load save\n" +
-        f"{pointer[3]}Delete save\n" +
-        f"{pointer[4]}Quit\n")
-    elif e == keys.DOWN:
-      pointer[pointerI] = "  "
-      pointerI = (pointerI + 1) % 5
-      pointer[pointerI] = "> "
-      print(
+      # reprint menu upon keyboard interrupt. the menu is meant to be reprinted if a key that is not listed below is pressed
+      print("What would you like to do?\n" +
         f"{pointer[0]}Continue\n" +
         f"{pointer[1]}Save game\n" +
         f"{pointer[2]}Load save\n" +
         f"{pointer[3]}Delete save\n" +
         f"{pointer[4]}Quit\n")
+    # move pointer up then reprint menu
+    if e == keys.UP:
+      pointer[pointerI] = "  "
+      # we can simply subtract the pointer position like this without checking for < 0 values due to python's negative index support
+      pointerI = (pointerI - 1) % 5
+      pointer[pointerI] = "> "
+      print("What would you like to do?\n" +
+        f"{pointer[0]}Continue\n" +
+        f"{pointer[1]}Save game\n" +
+        f"{pointer[2]}Load save\n" +
+        f"{pointer[3]}Delete save\n" +
+        f"{pointer[4]}Quit\n")
+    # move pointer down then reprint menu
+    elif e == keys.DOWN:
+      pointer[pointerI] = "  "
+      pointerI = (pointerI + 1) % 5
+      pointer[pointerI] = "> "
+      print("What would you like to do?\n" +
+        f"{pointer[0]}Continue\n" +
+        f"{pointer[1]}Save game\n" +
+        f"{pointer[2]}Load save\n" +
+        f"{pointer[3]}Delete save\n" +
+        f"{pointer[4]}Quit\n")
+    # if player confirms selection
     elif e == keys.ENTER:
+      # go back to game if pointer was on continue
       if pointerI == 0:
         print("Back to Math Temple!\n")
         printRoom(playerRoom)
         return
+      # run save function if pointer was on save
       elif pointerI == 1:
         print("Saving...")
         save()
         print("Back to Math Temple!\n")
         printRoom(playerRoom)
         return
+      # run load function if pointer was on load
       elif pointerI == 2:
         print("Loading last save...")
         load()
         print("Back to Math Temple!\n")
         printRoom(playerRoom)
         return
+      # confirm if user wants to delete save before either running delete function or going back to game
       elif pointerI == 3:
-        print("Are you sure? (y/n)")
+        print("Are you sure? (y/n)\n")
         try:
           e = getkey()
         except KeyboardInterrupt:
+          print("Going back...\n")
+          print("What would you like to do?\n" +
+        f"{pointer[0]}Continue\n" +
+        f"{pointer[1]}Save game\n" +
+        f"{pointer[2]}Load save\n" +
+        f"{pointer[3]}Delete save\n" +
+        f"{pointer[4]}Quit\n")
           continue
+        # will delete if user presses y. .lower() is there for case insensitive checking
         if e.lower() == "y":
           print("Deleting save...")
           delete()
-          print("Back to Math Temple!\n")
           printRoom(playerRoom)
           return
         else:
@@ -681,15 +779,18 @@ def saveScreen():
         f"{pointer[2]}Load save\n" +
         f"{pointer[3]}Delete save\n" +
         f"{pointer[4]}Quit\n")
+      # set boolean used for game loop to false to end game
       elif pointerI == 4:
         print("Goodbye!")
         run = False
         return
+    # if player simply presses escape on the screen go back to the game
     elif e == keys.ESCAPE:
       print("Back to Math Temple!\n")
       printRoom(playerRoom)
       return
 
+# function for printing player stats. this was originally meant to be run if the player presses s but is now exclusively run when a room is printed
 def stats():
   print(f"Level: {playerStats['xp'] + 1}")
   if playerStats["xp"] <= len(xpLevelToProg):
@@ -705,52 +806,84 @@ def stats():
     print(f"Damage reduction: {playerStats['def']}")
   print()
 
+# print the player's room
 def printRoom(room):
+  # iterate through the characters stored in the room list to determine what to print
   for y in range(len(room[0])): # column
     for x in range(len(room) - 1): # row
       tile = room[x][y]
-      
+      # print the player if on the player's position
       if x == playerStats["x"] and y == playerStats["y"]:
         print(playerStats["currentChar"], end = " ")
+      # decoration is stored decrypted, so no need to index the dictionary used to translate characters
       elif tile in {",", ".", "'", '"', "`"}:
         print(tile + " ", end = "")
+      # just print translated verison of character
       else:
         print(tileSymbol[tile] + " ", end = "")
     print() # print \n after each row
   print() # print line break after printing room
+  # print stats once done
   stats()
 
+def gameInfo():
+  print("Welcome to Math Temple!\nThis game is a dungeon-style RPG game about traversing a math-themed dungeon, defeating enemies, eating food, and collecting study notes.\n\nKey:\n- and | represent walls.\n* represents doors.\n$ represents shops where you can buy items.\n^ represents stairways to higher floors.\n? represents...???\nAll other symbols are decoration.\n\nYour goal is to traverse rooms and floors and to defeat all bosses. XP and money gained by defeating enemies will aid your attack, defense, and health along your journey.\n\nControls:\nArrow keys to move\nEnter to select options\ni to open inventory\nm to view map of the current floor\nesc to exit screens or view save menu\n/ to view this screen again\n\nWhen you're ready, hit enter to start!\n")
+  while True: # instructions screen loop
+    try:
+      e = getkey()
+    except KeyboardInterrupt:
+      continue
+    if e == keys.ENTER or e == keys.ESC:
+      return
+
+# print a map of the floor, mapped to the m key
 def printMap():
-  for x in range(len(map)):
-    for y in range(len(map[x])):
-      if map[x][y].isnumeric():
-        if int(map[x][y]) == playerStats["room"]:
+  # iterates through everything stored in the map layout
+  for x in range(len(maps[playerStats["floor"]])):
+    for y in range(len(maps[playerStats["floor"]][x])):
+      # if tile to print is a room
+      if maps[playerStats["floor"]][x][y].isnumeric():
+        # print player if room is player's current room
+        if int(maps[playerStats["floor"]][x][y]) == playerStats["room"]:
           print("@", end="")
-        elif int(map[x][y]) == 4:
+        # print B if room is boss room
+        elif int(maps[playerStats["floor"]][x][y]) == 4:
           print("B", end="")
-        elif playerStats["mapStates"][playerStats["floor"]][int(map[x][y])]:
+        # print # if room is unvisited, or space if visited
+        elif playerStats["mapStates"][playerStats["floor"]][int(maps[playerStats["floor"]][x][y])]:
           print(" ", end="")
         else:
           print("#", end="")
       else:
-          print(map[x][y], end="")
+          print(maps[playerStats["floor"]][x][y], end="")
     print()
+  print()
+  # reprint player's current room once done
+  printRoom(playerRoom)
 
+# move player on keypress
 def move(direction):
+  # global declaration to modify original variables
   global playerRoom
   global playerInv
-  encounterChance = int((playerStats["health"]/levelToHealthMax[playerStats["xp"]])*7)
-  posChar = playerRoom[playerStats["x"] + dirToCoord[direction + "x"]][playerStats["y"] + dirToCoord[direction + "y"]] # temp variable for the position of the character
-  if posChar in {"v", "h"}: # if its a wall block them
-    printRoom(playerRoom)
-    print("You can't move to that tile!")
-  elif posChar == "s": # if its a shop run shop
-    shop1()
-  elif posChar == "i":
+  # function for handling player reaching special items
+  def specialGet():
     special = specialItems[playerStats["floor"]]
     playerInv.append(special)
     print(f"You acquired the {specialItems[playerStats['floor']].title()}!")
     master[playerStats["floor"]][playerStats["room"]][(items[special + "c"])[0]][(items[special + "c"])[1]] = "e" # change tile of special item to e using a lot of coords
+  # roll value to see if player should fight enemy when moving
+  encounterChance = int((playerStats["health"]/levelToHealthMax[playerStats["xp"]])*7)
+  # boolean to check if player should move
+  shouldFight = True
+  posChar = playerRoom[playerStats["x"] + dirToCoord[direction + "x"]][playerStats["y"] + dirToCoord[direction + "y"]] # temp variable for the position of the character
+  if posChar in {"v", "h"}: # if its a wall block them
+    printRoom(playerRoom)
+    print("You can't move to that tile!\n")
+  elif posChar == "s": # if its a shop run shop
+    shop1()
+  elif posChar == "i": # if player on item run specialget function
+    specialGet()
     playerStats["x"] += dirToCoord[direction + "x"]
     playerStats["y"] += dirToCoord[direction + "y"]
     printRoom(playerRoom)
@@ -758,10 +891,13 @@ def move(direction):
     playerStats["x"] += dirToCoord[direction + "x"]
     playerStats["y"] += dirToCoord[direction + "y"]
     encounter = random.randint(1, 100)
+    # if player moves on a door
     if playerRoom[playerStats["x"]][playerStats["y"]] == "d":
+      # check if player is moving to boss room and if room has not been visited before
       if not playerStats["mapStates"][playerStats["floor"]][4] and playerStats["room"] + playerRoom[-1][tuple([playerStats["x"], playerStats["y"]])] == 4: # first check is simply to see if player visited boss room. if they did, don't fight boss i forgot mapstate is bool im stupid it was supposed to be sq brackets to index yea
+        # ask player if they want to fight boss. if not, keep them in the room and reset coordinate changes
         print("You feel uneasy, do you want to proceed? (Boss room ahead, press enter to move forward)\n")
-        try: # pressing ctrl c throws a keyboard interrupt error, so we gotta do this try catch every time we get a key
+        try:
           e = getkey()
         except KeyboardInterrupt:
           print("Going back...")
@@ -770,29 +906,54 @@ def move(direction):
           printRoom(playerRoom)
           return
         if e == keys.ENTER:
-          combat1(boss = True)
+          # activate combat function with boss flag
+          combat1(boss=True)
+          # player will never be saved on top of a door, but will be on one once they are fighting a boss. end the function before changing room if player's save is loaded, meaning they died
           if playerRoom[playerStats["x"]][playerStats["y"]] != "d":
             return
+        # if they decide not to fight
         else:
           print("Going back...")
           playerStats["x"] -= dirToCoord[direction + "x"]
           playerStats["y"] -= dirToCoord[direction + "y"]
           printRoom(playerRoom)
           return
+      # the dictionary storing doors for each room handles how much to increment the player's room value by. this grabs that value and adds it
       playerStats["room"] += playerRoom[-1][tuple([playerStats["x"], playerStats["y"]])]
-      playerStats[dirToRoom[direction][1]] = dirToRoom[direction][0]
+      # update the player's current room
       playerRoom = master[playerStats["floor"]][playerStats["room"]]
+      # dictionary for handling player placement in new room
+      dirToRoom = {
+        "up": ["y", len(playerRoom[0]) - 2],
+        "down": ["y", 1],
+        "left": ["x", len(playerRoom) - 3],
+        "right": ["x", 1]
+      }
+      # change player position
+      playerStats[dirToRoom[direction][0]] = dirToRoom[direction][1]
+      # if they end up on an item grab it
+      if master[playerStats["floor"]][playerStats["room"]][playerStats["x"]][playerStats["y"]] == "i":
+        specialGet()
+      # mark room as visited
       playerStats["mapStates"][playerStats["floor"]][playerStats["room"]] = True
+    # if player reaches stairs going up, add 1 to player floor number and reset room number
     elif playerRoom[playerStats["x"]][playerStats["y"]] == "U":
+      # set boolean checking if player should fight on this movement to false
+      shouldFight = False
       playerStats["floor"] += 1
       playerStats["room"] = 0
+      # update room
       playerRoom = master[playerStats["floor"]][playerStats["room"]]
       playerStats["x"] -= dirToCoord[direction + "x"] # move them back so they aren't in the wall anymore
       playerStats["y"] -= dirToCoord[direction + "y"]
+      # save once the player changes floors, no matter if it was visited or not
       print("Autosaving...")
       save()
       print("Done!")
+    # almost identical to what happens when player reaches stairs going up. only difference is room is set to final room of that floor and floor value goes down
     elif playerRoom[playerStats["x"]][playerStats["y"]] == "D":
+      # set boolean checking if player should fight on this movement to false
+      shouldFight = False
       playerStats["floor"] -= 1
       playerStats["room"] = 4
       playerRoom = master[playerStats["floor"]][playerStats["room"]]
@@ -801,10 +962,16 @@ def move(direction):
       print("Autosaving...")
       save()
       print("Done!")
-    if playerStats["health"] < levelToHealthMax[playerStats["xp"]]:
-      playerStats["health"] = min(levelToHealthMax[playerStats["xp"]], playerStats["health"] + 2)
 
-    if 1 <= encounter <= encounterChance and playerStats["room"] < 4:
+    # value to heal player's hp by every time they move
+    regen = int(levelToHealthMax[playerStats["xp"]]/40)
+    # check if player's health is below max to see if they should regenerate
+    if playerStats["health"] < levelToHealthMax[playerStats["xp"]]:
+      # min is used to make sure the player's health will never go above max
+      playerStats["health"] = min(levelToHealthMax[playerStats["xp"]], playerStats["health"] + regen)
+
+    # make player fight if rolled value for encounter is in threshold and player is not in final room and if they just changed floors, as in the last case, death becomes irrelevant
+    if 1 <= encounter <= encounterChance and playerStats["room"] < 4 and shouldFight:
       playerStats["currentChar"] = "!"
       printRoom(playerRoom)
       combat1()
@@ -813,12 +980,13 @@ def move(direction):
     else:
       printRoom(playerRoom)
 
-runSuccess = False
-
+# combat function
 def combat1(boss=False):
+  # initialize some variables
   exitCombat = False
   death = False
   combatPI1 = 0
+  # if the player is fighting a boss guarantee that the enemy will be the boss of that floor
   if boss:
     enemyName1 = enemyPools[playerStats["floor"]][-1]
   else:
@@ -826,8 +994,11 @@ def combat1(boss=False):
   enemy1 = enemies[enemyName1]
   currentEnemyHealth1 = enemy1["health"]
   print(enemy1["initialText"]) # encounter text
+  # function for refreshing combat menu
   def combatPointer1Refresh():
+    # allow usage of variable used to store combat menu pointer
     nonlocal combatPI1
+    # used for aligning healthbars
     spaces = " "*(6 - len(str(playerStats["health"])))
     print(f"HP: {playerStats['health']}/{levelToHealthMax[playerStats['xp']]}{spaces + enemyName1.title()} HP: {currentEnemyHealth1}/{enemy1['health']}") # label player and enemy health
     for i in range(10): # print player health bar
@@ -844,12 +1015,14 @@ def combat1(boss=False):
       else:
         print(" ", end = "")
     print("\n") # print line break after health bars
-    
+
+    # print actual combat menu with pointers
     print("ATK INV RUN")
     combatPointer1 = [" ", " "]
     combatPointer1.insert(combatPI1, "^")
     print(" " + "   ".join(combatPointer1))
-    
+
+    # print buffed stats if they are above 0
     if playerStats["atk"] > 0:
       print(f"Extra damage: {playerStats['atk']}")
     if playerStats["def"] > 0:
@@ -857,105 +1030,141 @@ def combat1(boss=False):
     print()
 
   combatPointer1Refresh() # initial menu
-  
+
+  # function for handling attacks
   def atk1(enemy):
     nonlocal currentEnemyHealth1
     nonlocal exitCombat
     unvariedAtk = math.floor(4**(1 + 0.2*playerStats["xp"])) # base atk
     atkVariation = int((50**(1/17))**playerStats["xp"]) # variation in atk; at lvl 1 it's +-1 and at lvl 18 (max) it's +- 50
+    # roll 2 values to see if player should miss or get a critical attack
     miss = random.randint(1, 100)
     crit = random.randint(1, 100)
+    # prioritize miss over crit, player does no damage
     if miss <= playerStats["miss"]:
       playerAtkInt1 = 0
       print("You missed!")
+    # player does 1.5 times usual damage if crit
     elif crit <= playerStats["crit"]:
       playerAtkInt1 = int(1.5 * (random.randint(unvariedAtk - atkVariation, unvariedAtk + atkVariation) / (enemy["def"] // 2)) + playerStats["atk"])
       print(f"Critical hit! You dealt {playerAtkInt1} damage to the {enemyName1.title()}!")
+    # player does normal amount of damage
     else:
       playerAtkInt1 = int(random.randint(unvariedAtk - atkVariation, unvariedAtk + atkVariation) / (enemy["def"] // 2) + playerStats["atk"])
       print(f"You dealt {playerAtkInt1} damage to the {enemyName1.title()}!")
+    # subtract enemy health
     currentEnemyHealth1 -= playerAtkInt1
+    # handle buffs affecting player damage
     removeQueue = []
     for buff in playerStats["buffs"]["atk"].keys():
+      # decrement buff duration by 1
       playerStats["buffs"]["atk"][buff]["duration"] -= 1
+      # if buff duration becomes 0, or runs out, subtract from stat and queue it to be removed
       if playerStats["buffs"]["atk"][buff]["duration"] == 0:
         playerStats["atk"] -= playerStats["buffs"]["atk"][buff]["change"]
         print(f"You lost a buff: -{playerStats['buffs']['atk'][buff]['change']} extra damage.")
         removeQueue.append(buff)
+    # remove buffs after subtracting from buffed stat to avoid errors
     for i in removeQueue:
       del playerStats["buffs"]["atk"][i]
+    # run enemy death function once player kills enemy and exit combat afterwards
     if currentEnemyHealth1 <= 0:
       enemyDeath1()
       exitCombat = True
       return
-  
+
+  # handles enemy attacks
   def enemyAtk1():
     print() # line break for clarity
+    # make variables in overarching function modifiable here
     nonlocal enemy1
     nonlocal death
+    # roll values for deciding whether or not enemy will miss or crit
     miss = random.randint(1, 100)
     crit = random.randint(1, 100)
+    # prioritize miss over crit
     if miss <= enemy1["miss"]:
       print(f"{enemyName1.title()} missed!")
+    # deal 1.5 times more damage if crit
     elif crit <= enemy1["crit"]:
       enemyAtkInt1 = max(math.floor(1.5*random.randint(enemy1["atk"] - 1, enemy1["atk"] + 1)) - playerStats["def"], 0)
       playerStats["health"] -= enemyAtkInt1
       print(f"Critical! {enemyName1.title()} deals {enemyAtkInt1} damage.")
+    # normal damage if values are not low enough
     else:
       enemyAtkInt1 = random.randint(enemy1["atk"] - 1, enemy1["atk"] + 1)
       playerStats["health"] -= enemyAtkInt1
       print(f"{enemyName1.title()} deals {enemyAtkInt1} damage.")
+    # if player dies, reload save and end combat
     if playerStats["health"] <= 0:
       print("You died! Loading last save...\n")
       load()
       death = True
+    # handle damage decreasing buffs
     removeQueue = []
     for buff in playerStats["buffs"]["def"].keys():
+      # decrement buff duration by 1
       playerStats["buffs"]["def"][buff]["duration"] -= 1
+      # if buff duration runs out due to decrementation lower stat and queue to be removed
       if playerStats["buffs"]["def"][buff]["duration"] == 0:
         playerStats["def"] -= playerStats["buffs"]["def"][buff]["change"]
         print(f"You lost a buff: -{playerStats['buffs']['def'][buff]['change']} damage reduction.")
         removeQueue.append(buff)
+    # remove buffs separately to avoid errors
     for i in removeQueue:
       del playerStats["buffs"]["def"][i]
 
+  # handles enemy death
   def enemyDeath1():
+    # make variables in overarching function usable here
     nonlocal exitCombat
+    nonlocal enemyName1
+    # set combat to end
     exitCombat = True
-    print(f"You killed the {enemyName1}.")
+    print(f"You killed the {enemyName1.title()}.")
     xpGainVariation = int((3**(1/3))**playerStats["room"]) # variation in xp drop
+    # generate player's gained xp and money
     xpGain1 = random.randint(enemy1["xpYield"] - xpGainVariation, enemy1["xpYield"] + xpGainVariation)
     moneyGain1 = random.randint(enemy1["moneyYield"] - 1, enemy1["moneyYield"] + 1)
+    # add gains
     playerStats["xpProg"] += xpGain1
     playerStats["money"] += moneyGain1
+    # check if player is at max level before adding xp
     if len(xpLevelToProg) == playerStats["xp"] + 1:
       print("You're at max level!")
+    # add if not max level and handle excess xp on levelup
     else: 
       if playerStats["xpProg"] >= xpLevelToProg[playerStats["xp"]]:
         print("You levelled up!")
         if len(xpLevelToProg) >= playerStats["xp"]:
           playerStats["xpProg"] %= xpLevelToProg[playerStats["xp"]]
         playerStats["xp"] += 1
+      # print out how much xp was gained if no level up
       else:  
         print(f"You gained {xpGain1} XP and ${moneyGain1}! (Level {playerStats['xp'] + 1}; {playerStats['xpProg']}/{xpLevelToProg[playerStats['xp']]} to next level)\n")
-    if enemy1 == enemyPools[playerStats["floor"]][-1]:
-      print(f"{enemy1} dropped a study note! It says:")
+    # if enemy was a boss, drop the study note and add to player inventory
+    if boss:
+      print(f"{enemyName1.title()} dropped a study note! It says:")
       print(items[studyNotes[playerStats["floor"]] + "c"])
       playerInv.append(studyNotes[playerStats["floor"]])
 
+  # combat loop for keypresses
   global runSuccess
   while True:
     try:
       e = getkey()
     except KeyboardInterrupt:
       continue
+    # refresh menu on arrow key press
     if e == keys.LEFT:
       combatPI1 = (combatPI1 - 1) % 3
       combatPointer1Refresh()
     elif e == keys.RIGHT:
       combatPI1 = (combatPI1 + 1) % 3
       combatPointer1Refresh()
+    # once player presses enter to confirm choice
     elif e == keys.ENTER:
+      # attack if choice was atk
       if combatPI1 == 0:
         atk1(enemy1)
         if exitCombat == True: # check for enemy death here
@@ -967,68 +1176,89 @@ def combat1(boss=False):
           return
         print(random.choice(enemy1["encounterTexts"]))
         combatPointer1Refresh()
+      # open inventory if choice was inv
       elif combatPI1 == 1:
         inv()
         combatPointer1Refresh()
+      # try to run if choice was run
       elif combatPI1 == 2:
+        # deny run request if fighting boss
         if boss:
           print("You can't run from a boss battle!\n")
           combatPointer1Refresh()
+        # give player problem to answer to decide if they should escape
         else:
+          # if correct answer, escape
           run(playerStats["floor"])
           if runSuccess == True:
             print(f"\nYou fled from the {enemyName1.title()}.\n")
             runSuccess = False
             return
+          # otherwise give enemy free attack and bring back to menu
           else:
             print("You answered the problem wrong! Try again next turn.")
             enemyAtk1()
             print(random.choice(enemy1["encounterTexts"]))
             combatPointer1Refresh()
 
+# handles inventory
 def inv():
+  # if player doesn't have items bring them back to what menu they were on previously
   if len(playerInv) == 0:
     print("Your inventory is empty!\n")
     return
 
+  # set up inventory menu pointer
   invPI = 0
-  
+
+  # print inventory menu
   def invRefresh():
     print("Your inventory (esc to exit):")
-    invPI = 0
     for i in range(0, len(playerInv)):
       if i == invPI:
         print(f"{i + 1}: {playerInv[i]} <")
       else:
         print(f"{i + 1}: {playerInv[i]}")
+    print()
   
   invRefresh() # initial inv display
-  
+
+  # while loop for keypresses
   while True:
     try:
       e = getkey()
     except KeyboardInterrupt:
       continue
+    # move pointer on arrow key press
     if e == keys.UP:
-      (invPI - 1) % 3
+      invPI = (invPI - 1) % len(playerInv)
+      invRefresh()
     elif e == keys.DOWN:
-      (invPI + 1) % 3
+      invPI = (invPI + 1) % len(playerInv)
+      invRefresh()
+    # handle selection once player chooses with enter
     elif e == keys.ENTER:
+      # get item they want to use
       currentItem = playerInv[invPI]
-      print()
+      # ask if they want to use the item
       print(items[currentItem] + "\n")
       print("Would you like to use this item? Press enter again to confirm.\n")
+      # prompt for keypress
       try:
         confirm = getkey()
       except KeyboardInterrupt:
         invRefresh()
+      # enter will confirm usage
       if confirm == keys.ENTER:
+        # heal player if item was for healing, then delete from inventory
         if items[currentItem + "s"] == "health":
           playerStats["health"] += items[currentItem + "b"]
           print(f"{items[currentItem + 'b']} HP was restored. You now have {playerStats['health']} HP.\n")
           del playerInv[invPI]
+        # print contents of study note if item was a note
         elif items[currentItem + "s"] == "unusable":
           print(items[currentItem + "c"] + "\n")
+        # add damage increase or decrease buff to player stats, then delete from inventory
         else:
           playerStats["buffs"][items[currentItem + "s"]][currentItem] = {"change": items[currentItem + "b"], "duration": items[currentItem + "t"]}
           playerStats[items[currentItem + "s"]] += items[currentItem + "b"]
@@ -1036,12 +1266,17 @@ def inv():
           del playerInv[invPI]
         return
       else:
+        # refresh menu if player did not want to use item
         invRefresh()
+    # close menu once player presses escape
     elif e == keys.ESCAPE:
       return
 
+# handles running
 def run(floor):
+  # allow usage of global boolean for checking if player escapes successfully
   global runSuccess
+  # get problem to
   mathProblem = random.choice(list(floorMath[floor].keys()))
   mathSolution = str(floorMath[floor][mathProblem])
   print(f"In order to run you must solve the following problem:\n{mathProblem}")
@@ -1051,84 +1286,102 @@ def run(floor):
     return
   else:
     return
-    
-# also add healthbar and inv in both this and standard menu when moving around
 
-itemState1 = [0, 0, 0] # so it doesn't get redefined in the shop1() function every time
-
+# shop function
 def shop1():
   print("Welcome to the shop! Use arrow keys and enter to select your items below. Press esc to exit.\n")
-  global itemState1  
+  # get list of items being sold on this floor
   itemList1 = shopPools[playerStats["floor"]]
+  # initialize pointer position
   shopPI1 = 0
+  # list for storing what to print depending on if item is bought or not. will be indexed with itemstate value
   itemChar1 = ["# ", "x "]
+  # function for refreshing menu
   def shopPointer1Refresh():
+    # allow usage of pointer position variable
     nonlocal shopPI1
+    # make string for pointer
     itemPointer1 = [" ", " "]
     itemPointer1.insert(shopPI1, "^")
     itemDisplay1 = ""
+    # print out items
     for i in range(3):
-      itemDisplay1 += itemChar1[itemState1[i]]
+      itemDisplay1 += itemChar1[itemStates[playerStats["floor"]][i]]
+    # print out menu along with player balance
     print(itemDisplay1)
     print(" ".join(itemPointer1))
     print(f"Money: ${playerStats['money']}\n")
+  # called when player chooses item
   def itemDesc1(itemName):
+    # print description
     print(f"Item: {itemName.title()}\nDescription: {items[itemName]}\nCost: {items[itemName + 'c']}\n\nDo you wish to buy this item? (Press enter again to buy the item. Press esc to go back.)\n")
+    # get key to decide whether or not to give item
     while True:
       try:
         e = getkey()
       except KeyboardInterrupt:
         continue
+      # confirm selection with enter
       if e == keys.ENTER:
+        # check if they have enough money
         if items[itemName + "c"] > playerStats["money"]:
           print("You can't afford that!")
+        # give item if they do, subtract cost from balance
         else:
           playerInv.append(itemName)
           print(f"You have bought the {itemName.title()}!\n")
-          itemState1[shopPI1] += 1
+          itemStates[playerStats["floor"]][shopPI1] += 1
           playerStats["money"] -= items[itemName + "c"]
+        # refresh shop menu
         shopPointer1Refresh()
         return
       elif e == keys.ESCAPE:
+        # refresh shop if they don't want to buy
         shopPointer1Refresh()
         return
+  # initial menu
   shopPointer1Refresh()
+  # get keys
   while True:
     try:
       e = getkey()
     except KeyboardInterrupt:
       continue
+    # move and refresh menu on arrow key press
     if e == keys.LEFT:
       shopPI1 = (shopPI1 - 1) % 3
       shopPointer1Refresh()
     elif e == keys.RIGHT:
       shopPI1 = (shopPI1 + 1) % 3
       shopPointer1Refresh()
+    # call itemdesc if item they want to buy is not bought
     elif e == keys.ENTER:
       if itemState1[shopPI1] == 0:
         itemDesc1(itemList1[shopPI1])
+      # don't if already bought
       else:
         print("You have already bought that item!\n")
         shopPointer1Refresh()
+    # leave shop on escape press
     elif e == keys.ESCAPE:
       print("Come back soon!\n")
       printRoom(playerRoom)
       return
 
 if "save" not in db.keys(): # initializes a save file if a save wasn't found
-  # just in case some value changes during the save process, we're hardcoding the fields with starting stats
   delete()
 
+# load player save, will exist no matter what due to check earlier
 load()
+
 printRoom(playerRoom) # starting room print
-# indexes player's floor and room and prints it
 
 while run: # game loop
-  # if player xp is sufficient run levelup
   try:
     e = getkey()
   except KeyboardInterrupt:
     continue
+  # move player on arrow key press
   if e == keys.UP:
     move("up")
   elif e == keys.DOWN:
@@ -1137,11 +1390,18 @@ while run: # game loop
     move("left")
   elif e == keys.RIGHT:
     move("right")
+  # print map on m press
   elif e.lower() == "m":
     printMap()
+  # open inventory on i press
   elif e.lower() == "i":
     inv()
     printRoom(playerRoom)
+  # reprint game instructions on / press
+  elif e == keys.SLASH:
+    gameInfo()
+    printRoom(playerRoom)
+  # open save screen on esc press
   elif e == keys.ESCAPE:
     saveScreen()
 
