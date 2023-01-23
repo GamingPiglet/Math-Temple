@@ -7,7 +7,7 @@ run = True # keep game running
 
 vwall = ["c", "v", "v", "v", "v", "v", "v", "c"] # vertical wall
 
-# lists for storing room layouts. the final dictionary at the end with tuples as keys store door information
+# lists for storing room layouts. the final dictionary at the end with tuples as keys store door information, tuples store coordinates of doors and items store numbers to increment the player's room by. each room has a unique integer id and the items add to the player's current room id to jump them to specific rooms
 room10 = [vwall, ["h", "s", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["d", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], ["h", "e", "e", "e", "e", "e", "e", "h"], vwall, {tuple([5, 0]): 1}]
 
 room11 = [vwall, ["h", "e", "h", "e", "e", "e", "e", "h"], ["d", "e", "h", "e", "e", "e", "e", "h"], ["h", "e", "h", "e", "e", "h", "e", "h"], ["h", "e", "h", "e", "e", "h", "e", "h"], ["h", "e", "h", "e", "e", "h", "e", "d"], ["h", "e", "h", "e", "e", "h", "e", "h"], ["h", "e", "e", "e", "e", "h", "e", "h"], ["h", "e", "e", "e", "e", "h", "e", "h"], vwall, {tuple([5, 7]): -1, tuple([2, 0]): 1}]
@@ -111,54 +111,54 @@ playerRoom = master[playerStats["floor"]][playerStats["room"]] # index player ro
 playerInv = [] # list that stores the items the player bought
 
 items = { # dictionary of items that shops sell. keys that are just item names are the description, item names + c is cost, item name + s is the stat they change, item name + t is the duration they last if aren't heals, and item name + b is how much they change the stat. if an item has stat unusable, they're a boss drop and merely print the statement under item name + c once used
-  "bread": "A rather stale loaf of bread. Heals 15 HP.",
+  "bread": "A rather stale loaf of bread. Heals 12 HP.",
   "breadc": 4,
   "breads": "health",
-  "breadb": 15,
-  "chocolate stick": "Not a bar, but a stick of chocolate. Like the ones you break apart into two. Heals 23 HP.",
-  "chocolate stickc": 7,
+  "breadb": 12,
+  "chocolate stick": "Not a bar, but a stick of chocolate. Like the ones you break apart into two. Heals 14 HP.",
+  "chocolate stickc": 5,
   "chocolate sticks": "health",
-  "chocolate stickb": 23,
-  "extra sharp stick": "An extra sharp stick. Nice! Deals 3 more damage on your next attack when used.",
+  "chocolate stickb": 14,
+  "extra sharp stick": "An extra sharp stick. Deals 8 more damage on your next attack when used.",
   "extra sharp stickc": 5,
   "extra sharp sticks": "atk",
   "extra sharp stickt": 1,
-  "extra sharp stickb": 3,
+  "extra sharp stickb": 8,
   "crumb": "A strange looking crumb. You're not sure where this came from. Heals 10 HP.",
   "crumbc": 3,
   "crumbs": "health",
   "crumbb": 10,
-  "dusty textbook": "You aren't sure why, but you feel compelled to read it out loud. Decreases damage by 4 for 3 attacks.",
+  "dusty textbook": "You aren't sure why, but you feel compelled to read it out loud. Decreases damage by 7 for 3 attacks.",
   "dusty textbookc": 6,
   "dusty textbooks": "def",
   "dusty textbookt": 3,
-  "dusty textbookb": 4,
+  "dusty textbookb": 7,
   "golden three": "The Golden Three! Increases your attack by a whopping 33 for 3 turns through the power of sheer confidence.", # floor 1 special item
-  "golden threec": (4, 1),
+  "golden threec": (4, 1), # here itemc stores coordinates of special item instead of cost so that the item's tile can easily be replaced by an empty tile
   "golden threes": "atk",
   "golden threet": 3,
   "golden threeb": 33,
   "study note 1": "Dropped by the addition ninja. Seems to be grade 9 material.",
   "study note 1c": "In any linear equation in y-intercept form y = mx + b, m gives the slope of the line and b gives the y-intercept. The slope affects how steep the line appears and the y-intercept not only is equal to y in the point (0, y) but also represents how high or low the line is (its vertical shift). Parallel lines have the same slope m and perpendicular lines have slopes that are negative reciprocals of each other (e.g. a perpendicular line to y = 2x + 3 would be y = -x/2).",
   "study note 1s": "unusable",
-  "apple core": "A rotten apple core. Smells rancid. Decreases damage by 6 for 1 turn.",
+  "apple core": "A rotten apple core. Smells rancid. Decreases damage by 12 for 1 turn.",
   "apple corec": 7,
   "apple cores": "def",
   "apple coret": 1,
-  "apple coreb": 6,
-  "empty crate": "The apples all around this floor have to be carried somehow. Deals 6 more damage for 4 attacks.",
+  "apple coreb": 12,
+  "empty crate": "The apples all around this floor have to be carried somehow. Deals 8 more damage for 4 attacks.",
   "empty cratec": 11,
   "empty crates": "atk",
   "empty cratet": 4,
-  "empty crateb": 6,
-  "instant boba": "Bubble tea made from powder packets and milk. Not as good as the real thing, but gets the job done. Heals 17 HP.",
-  "instant bobac": 9,
+  "empty crateb": 8,
+  "instant boba": "Bubble tea made from powder packets and milk. Not as good as the real thing, but gets the job done. Heals 22 HP.",
+  "instant bobac": 10,
   "instant bobas": "health",
-  "instant bobab": 17,
-  "protein bar": "Doesn't taste great, but it's healthy. Heals 13 HP.",
+  "instant bobab": 22,
+  "protein bar": "Doesn't taste great, but it's healthy. Heals 15 HP.",
   "protein barc": 8,
   "protein bars": "health",
-  "protein barb": 13,
+  "protein barb": 15,
   "breakfast burger": "Egg between 2 english muffins. Filling enough to start your day. Heals 27 HP.",
   "breakfast burgerc": 12,
   "breakfast burgers": "health",
@@ -170,29 +170,29 @@ items = { # dictionary of items that shops sell. keys that are just item names a
   "study note 2": "Dropped by the subtraction paladin. Seems to be grade 10 material.",
   "study note 2c": "The quadratic formula gives up to 2 values of x for the roots of any quadratic in standard form ax^2 + bx + c. The formula is x = (-b +- sqrt(b^2 - 4ac))/2a. In the formula, the b^2 - 4ac under the square root is known as the determinant and allows us to deduce the number of roots of the quadratic. If it is positive, there are two roots; if it is zero, there is one root; if it is negative, there are no real roots/there are two complex roots.",
   "study note 2s": "unusable",
-  "bubble tea": "Very popular among students. Heals 20 HP.",
+  "bubble tea": "Very popular among students. Heals 34 HP.",
   "bubble teac": 14,
   "bubble teas": "health",
-  "bubble teab": 20,
-  "compass": "Not great for slicing, but you're good at stabbing. Deals 8 more damage for 6 attacks.",
+  "bubble teab": 34,
+  "compass": "Not great for slicing, but you're good at stabbing. Deals 18 more damage for 6 attacks.",
   "compassc": 12,
   "compasss": "atk",
   "compasst": 6,
-  "compassb": 8,
-  "notebook": "Flexible enough to redirect attacks. Decreases damage by 9 for 3 turns.",
+  "compassb": 18,
+  "notebook": "Flexible enough to redirect attacks. Decreases damage by 12 for 3 turns.",
   "notebookc": 13,
   "notebooks": "def",
   "notebookt": 3,
-  "notebookb": 9,
-  "french fries": "Would be nice with some other food, but you can down them in a few bites. Heals 16 HP.",
+  "notebookb": 12,
+  "french fries": "Would be nice with some other food, but you can down them in a few bites. Heals 24 HP.",
   "french friesc": 10,
   "french friess": "health",
-  "french friesb": 16,
-  "whole pizza": "As filling as a full-course meal. Heals 27 HP.",
+  "french friesb": 24,
+  "whole pizza": "As filling as a full-course meal. Heals 40 HP.",
   "whole pizzac": 17,
   "whole pizzas": "health",
-  "whole pizzab": 27,
-  "platinum four": "The Platinum Four! Increases your defense by 44 (effectively making you invincible!) for 4 turns by sheer courage.",
+  "whole pizzab": 40,
+  "platinum four": "The Platinum Four! Increases your defense by 44 (effectively making you invincible!) for 4 turns by sheer courage.", # floor 3 special item
   "platinum fourc": (8, 3),
   "platinum fours": "def",
   "platinum fourt": 4,
@@ -200,31 +200,31 @@ items = { # dictionary of items that shops sell. keys that are just item names a
   "study note 3": "Dropped by the multiplication mage. Seems to be grade 11 material.",
   "study note 3c": "The special angles are 30, 45, and 60 degrees. sin(30 deg) = 1/2, sin(45 deg) = sqrt(2)/2, sin(60 deg) = sqrt(3)/2; similarly cos(30 deg) = sqrt(3)/2, cos(45 deg) = sqrt(2)/2, cos(60 deg) = 1/2. For the future, 180 degrees = pi radians.",
   "study note 3s": "unusable",
-  "scissors": "Longer blade, deeper cuts. Deals 10 more damage for 6 attacks.",
+  "scissors": "Longer blade, deeper cuts. Deals 30 more damage for 6 attacks.",
   "scissorsc": 20,
   "scissorss": "atk",
   "scissorst": 6,
-  "scissorsb": 10,
-  "backpack": "Too small to hold anything, but you can toss it to dampen attacks. Decreases damage by 11 for 3 turns.",
+  "scissorsb": 30,
+  "backpack": "Too small to hold anything, but you can toss it to dampen attacks. Decreases damage by 20 for 3 turns.",
   "backpackc": 19,
   "backpacks": "def",
   "backpackt": 3,
-  "backpackb": 11,
-  "brown sugar boba": "The brown sugar pearls make it taste much better. Heals 24 HP.",
+  "backpackb": 20,
+  "brown sugar boba": "The brown sugar pearls make it taste much better. Heals 75 HP.",
   "brown sugar bobac": 18,
   "brown sugar bobas": "health",
-  "brown sugar bobab": 24,
-  "chicken burger combo": "A meaty chicken burger, plus some fries and a drink make a great quick lunch. Heals 30 HP.",
+  "brown sugar bobab": 78,
+  "chicken burger combo": "A meaty chicken burger, plus some fries and a drink make a great quick lunch. Heals 100 HP.",
   "chicken burger comboc": 21,
   "chicken burger combos": "health",
-  "chicken burger combob": 30,
-  "lunch wrap": "A small but easy to digest meal for tight situations. Heals 20 HP.",
+  "chicken burger combob": 100,
+  "lunch wrap": "A small but easy to digest meal for tight situations. Heals 78 HP.",
   "lunch wrapc": 17,
   "lunch wraps": "health",
-  "lunch wrapb": 20,
-  "division by zero": "A single, small piece of paper. On it is \"0/0\" written in black ink. You're not too sure what this will do.",
+  "lunch wrapb": 75,
+  "division by zero": "A single, small piece of paper. On it is \"0/0\" written in black ink. You're not too sure what this will do.", # floor 4 special item
   "division by zeroc": (1, 8),
-  "division by zeros": random.choice(["atk", "def", "health"]),
+  "division by zeros": random.choice(["atk", "def", "health"]), # stats are randomized
   "division by zerot": random.randint(1, 3),
   "division by zerob": random.randint(200, 300),
   "study note 4": "Dropped by the division gunner. Seems to be grade 12 material.",
@@ -249,11 +249,13 @@ itemPools = [itemNames1, itemNames2, itemNames3, itemNames4]
 # stores special items, ordered this way for same reason as study notes
 specialItems = ["golden three", "book of life", "platinum four", "division by zero"]
 
-# stores which items the shop on each floor sells 
+# stores which items the shop on each floor sells
 shopPools = [[], [], [], []]
 
 # will be used to store which items in each shop has been bought. stores numbers to make printing out items easier later
 itemStates = [[], [], [], []]
+# stores current state of special items
+specialItemStates = []
 
 # dictionary storing enemies. stats are self-explanatory, initialtext is for the message indicating what enemy you're fighting, and encountertexts is for messages that appear throughout the fight
 enemies = {
@@ -335,7 +337,7 @@ enemies = {
     "encounterTexts": ["The enthusiast throws a ball at a wall, then tries to find the equation of its arc.\n", "The enthusiast throws a ball at a muncher. It lands.\n", "The enthusiast answers an angry call.\n"]
   },
   "subtraction paladin": {
-    "health": 150,
+    "health": 207,
     "atk": 14,
     "def": 10,
     "crit": 15,
@@ -346,7 +348,7 @@ enemies = {
     "encounterTexts": ["The paladin hoists his axe onto his shoulder, and bounces it on his shoulder.\n", "The paladin lets out a hearty warcry.\n", "The paladin adjusts his helmet.\n"]
   },
   "wave clacker": {
-    "health": 137,
+    "health": 157,
     "atk": 16,
     "def": 8,
     "crit": 5,
@@ -357,18 +359,18 @@ enemies = {
     "encounterTexts": ["The student lets his clackers swing as he visualizes a graph.\n", "The student slows down the clackers to rest his hand.\n", "The student's clackers slip out of his hand and into a wall, so he goes and grabs them.\n"]
   },
   "trigbot": {
-    "health": 145,
+    "health": 180,
     "atk": 14,
     "def": 11,
     "crit": 5,
     "miss": 20,
-    "xpYield": 23,
-    "moneyYield": 8,
+    "xpYield": 24,
+    "moneyYield": 9,
     "initialText": "Someone got too tired of using their calculator for trig functions, so they made this robot to do it for them. They forgot to program the 3 laws of robotics, so it's also murderous.\n",
     "encounterTexts": ["The robot sees a mouse, then starts trying to kill it.\n", "The robot sees a triangle on a wall and immediately tries to solve it.\n", "The robot starts thinking of the best way to cut you into triangles.\n"]
   },
   "enlightened bogey": {
-    "health": 142,
+    "health": 178,
     "atk": 15,
     "def": 9,
     "crit": 5,
@@ -379,7 +381,7 @@ enemies = {
     "encounterTexts": ["The bogey seems to be reading another textbook in its mind.\n", "The bogey tries to make a textbook appear, but forgets it can't do that in the physical world.\n", "The bogey starts dancing, but nothing happens.\n"]
   },
   "multiplication mage": {
-    "health": 250,
+    "health": 360,
     "atk": 20,
     "def": 15,
     "crit": 10,
@@ -408,7 +410,7 @@ enemies = {
     "miss": 20,
     "xpYield": 27,
     "moneyYield": 17,
-    "initialText": "This student is at the top of his calc class. He also happens to be a boxer that is planning on sending you to the hospital.\n",
+    "initialText": "This student is at the top of his calculus class. He also happens to be a boxer that is planning on sending you to the hospital.\n",
     "encounterTexts": ["The boxer does some practice jabs.\n", "The boxer starts jumping around to psych himself up.\n", "The boxer punches a nearby wall.\n"]
   },
   "integrating pyromaniac": {
@@ -429,7 +431,7 @@ enemies = {
     "crit": 40,
     "miss": 25,
     "xpYield": 100,
-    "moneyYield": 18,
+    "moneyYield": 50,
     "initialText": "Unlike the other bosses, the Division Gunner went for full efficiency in his fighting power. That's why he's aiming 2 custom-made rubber band launchers at you.\n",
     "encounterTexts": ["The gunner twirls his launchers.\n", "The gunner checks on his rubber bands.\n", "The gunner shoots a wall.\n"]
   }
@@ -627,6 +629,8 @@ def save():
   db["inv"] = playerInv.copy()
   db["shop"] = copy.deepcopy(shopPools)
   db["itemStates"] = copy.deepcopy(itemStates)
+  db["specialItemStates"] = specialItemStates.copy()
+  print(db["specialItemStates"])
 
 # loads values saved in the db. deepcopy is being used for reason listed for save
 def load():
@@ -635,10 +639,13 @@ def load():
   global playerInv
   global shopPools
   global playerRoom
+  global itemStates
+  global specialItemStates
   playerStats = copy.deepcopy(dict(db["save"])) # take saved player info from db
   playerInv = list(db["inv"]).copy()
   shopPools = copy.deepcopy(list(db["shop"]))
   itemStates = copy.deepcopy(list(db["itemStates"]))
+  specialItemStates = list(db["specialItemStates"]).copy()
   playerRoom = master[playerStats["floor"]][playerStats["room"]]
 
 # reassign the values within the db to what the values would be on first run
@@ -675,6 +682,8 @@ def delete():
   db["inv"] = []
   db["shop"] = copy.deepcopy(shopPools)
   db["itemStates"] = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
+  # special items are stored as characters so printroom function can just index it when printing
+  db["specialItemStates"] = ["i", "i", "i", "i"]
   # load save file once reinitialized
   load()
   gameInfo() # print gameinfo on new save
@@ -814,11 +823,13 @@ def printRoom(room):
       tile = room[x][y]
       # print the player if on the player's position
       if x == playerStats["x"] and y == playerStats["y"]:
-        print(playerStats["currentChar"], end = " ")
+        print(playerStats["currentChar"], end = " ") # we don't know why end has to be a space, it just has to for alignment
       # decoration is stored decrypted, so no need to index the dictionary used to translate characters
       elif tile in {",", ".", "'", '"', "`"}:
         print(tile + " ", end = "")
       # just print translated verison of character
+      elif tile == "i":
+        print(tileSymbol[specialItemStates[playerStats["floor"]]], end = " ")
       else:
         print(tileSymbol[tile] + " ", end = "")
     print() # print \n after each row
@@ -826,7 +837,7 @@ def printRoom(room):
   # print stats once done
   stats()
 
-def gameInfo():
+def gameInfo(): # instructions screen as a function that may be called in-game
   print("Welcome to Math Temple!\nThis game is a dungeon-style RPG game about traversing a math-themed dungeon, defeating enemies, eating food, and collecting study notes.\n\nKey:\n- and | represent walls.\n* represents doors.\n$ represents shops where you can buy items.\n^ represents stairways to higher floors.\n? represents...???\nAll other symbols are decoration.\n\nYour goal is to traverse rooms and floors and to defeat all bosses. XP and money gained by defeating enemies will aid your attack, defense, and health along your journey.\n\nControls:\nArrow keys to move\nEnter to select options\ni to open inventory\nm to view map of the current floor\nesc to exit screens or view save menu\n/ to view this screen again\n\nWhen you're ready, hit enter to start!\n")
   while True: # instructions screen loop
     try:
@@ -845,17 +856,17 @@ def printMap():
       if maps[playerStats["floor"]][x][y].isnumeric():
         # print player if room is player's current room
         if int(maps[playerStats["floor"]][x][y]) == playerStats["room"]:
-          print("@", end="")
+          print("@", end = "")
         # print B if room is boss room
         elif int(maps[playerStats["floor"]][x][y]) == 4:
-          print("B", end="")
+          print("B", end = "")
         # print # if room is unvisited, or space if visited
         elif playerStats["mapStates"][playerStats["floor"]][int(maps[playerStats["floor"]][x][y])]:
-          print(" ", end="")
+          print(" ", end = "")
         else:
-          print("#", end="")
+          print("#", end = "")
       else:
-          print(maps[playerStats["floor"]][x][y], end="")
+          print(maps[playerStats["floor"]][x][y], end = "")
     print()
   print()
   # reprint player's current room once done
@@ -868,21 +879,21 @@ def move(direction):
   global playerInv
   # function for handling player reaching special items
   def specialGet():
+    specialItemStates[playerStats["floor"]] = "e" # reassign special item for that floor to empty space
     special = specialItems[playerStats["floor"]]
     playerInv.append(special)
     print(f"You acquired the {specialItems[playerStats['floor']].title()}!")
-    master[playerStats["floor"]][playerStats["room"]][(items[special + "c"])[0]][(items[special + "c"])[1]] = "e" # change tile of special item to e using a lot of coords
   # roll value to see if player should fight enemy when moving
   encounterChance = int((playerStats["health"]/levelToHealthMax[playerStats["xp"]])*7)
   # boolean to check if player should move
   shouldFight = True
   posChar = playerRoom[playerStats["x"] + dirToCoord[direction + "x"]][playerStats["y"] + dirToCoord[direction + "y"]] # temp variable for the position of the character
-  if posChar in {"v", "h"}: # if its a wall block them
+  if posChar in {"v", "h"}: # if it's a wall block them
     printRoom(playerRoom)
     print("You can't move to that tile!\n")
-  elif posChar == "s": # if its a shop run shop
+  elif posChar == "s": # if it's a shop run shop
     shop1()
-  elif posChar == "i": # if player on item run specialget function
+  elif posChar == "i" and specialItemStates[playerStats["floor"]] == posChar: # if player on item run specialget function
     specialGet()
     playerStats["x"] += dirToCoord[direction + "x"]
     playerStats["y"] += dirToCoord[direction + "y"]
@@ -924,9 +935,9 @@ def move(direction):
       playerRoom = master[playerStats["floor"]][playerStats["room"]]
       # dictionary for handling player placement in new room
       dirToRoom = {
-        "up": ["y", len(playerRoom[0]) - 2],
-        "down": ["y", 1],
-        "left": ["x", len(playerRoom) - 3],
+        "up": ["y", len(playerRoom[0]) - 2], # length returns how many rows and -2 accounts for indexing from 0 + the wall
+        "down": ["y", 1], # 0 would spawn the player inside a wall
+        "left": ["x", len(playerRoom) - 3], # length in this case returns how many columns, -3 instead of -2 to account for the door info dictionary at the end of each room list
         "right": ["x", 1]
       }
       # change player position
@@ -1276,16 +1287,16 @@ def inv():
 def run(floor):
   # allow usage of global boolean for checking if player escapes successfully
   global runSuccess
-  # get problem to
+  # get random math problem from dictionary as a key
   mathProblem = random.choice(list(floorMath[floor].keys()))
-  mathSolution = str(floorMath[floor][mathProblem])
+  mathSolution = str(floorMath[floor][mathProblem]) # store the solution to the problem by indexing the dictionary with the key stored earlier
   print(f"In order to run you must solve the following problem:\n{mathProblem}")
-  mathSolInput = input("Enter: ").lower()
+  mathSolInput = input("Enter: ").lower() # check if the user inputs the correct solution and if they do then toggle a flag variable that lets them return out of combat function
   if mathSolInput == mathSolution:
     runSuccess = True
     return
   else:
-    return
+    return # otherwise return them without flag variable toggled and they continue fighting
 
 # shop function
 def shop1():
@@ -1356,7 +1367,7 @@ def shop1():
       shopPointer1Refresh()
     # call itemdesc if item they want to buy is not bought
     elif e == keys.ENTER:
-      if itemState1[shopPI1] == 0:
+      if itemStates[playerStats["floor"]][shopPI1] == 0:
         itemDesc1(itemList1[shopPI1])
       # don't if already bought
       else:
@@ -1377,6 +1388,7 @@ load()
 printRoom(playerRoom) # starting room print
 
 while run: # game loop
+  print(specialItemStates)
   try:
     e = getkey()
   except KeyboardInterrupt:
